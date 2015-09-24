@@ -151,11 +151,14 @@
                         <li>
                             Fire Simulation
                         </li>
-                        <li>Smoke Simulation</li>
-                        <li>3D user controlled camera</li>
-                        <li>3D implementation</li>
-                        <li>Realtime rendering</li>
-                        <li>Translucent particles</li>
+                        <li>Smoke Simulation (fire)</li>
+                        <li>3D user controlled camera (ball, fountain, fire)</li>
+                        <li>3D implementation(all)</li>
+                        <li>Realtime rendering(all)</li>
+                        <li>Translucent particles(fire)</li>
+                        <li>Real‐time user interaction with system(fireworks)<li>
+                        <li>Simulation driven audio(fireworks)</li>
+ 
                     </ul>
                 </div>
                 <div class="col-lg-4">
@@ -167,7 +170,7 @@
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <p>AUTHORS:</p>
                     <p>Zixiao Wang(wang5586)</p>
-                    <p>Wenhan Zhu</p>
+                    <p>Wenhan Zhu(zhuxx811)</p>
                 </div>
 
             </div>
@@ -200,7 +203,7 @@
                             <h2>BALL BOUNCING !</h2>
                             <hr class="star-primary">
                             <img src="resources/boucing_ball.gif" class="img-responsive img-centered" alt="Ball Bouncing Off">
-                            <p></p>
+                            <p>Ball Bouncing Off is implemented in 3D. The ball has a fixed initial position and velocity. The ball's velocity is then effected by gravity. The ball is able to bounce around freely in the box. The framerate of this animation is fixed at 60 fps on a Macbook pro retina 13 2015. This animation has a user controled camera system that operates as following, click and drag to change view angle, scroll to make animation closer and further, right click and drag to change animation location. </p>
                             <ul class="list-inline item-details">
                                 <li>
                                     <strong><a href="BallBounceOff/BallBounceOff.pde"> DOWNLOAD </a></strong>
@@ -228,7 +231,7 @@
                             <h2>FOUNTAIN !</h2>
                             <hr class="star-primary">
                             <img src="resources/fountain.gif" class="img-responsive img-centered" alt="">
-                            <p></p>
+                            <p>The fountain is a partical system that simulates a fountain in 3D. The generate rate is set to 3000 per sec and the particles are drawn as spheres with decresed sphere detail. We were able to achieve 32 fps on a Dell laptop with GT630M. The fountain has the same camera control as the bouncing ball. </p>
                             <ul class="list-inline item-details">
                                 <li>
                                     <strong><a href="fountain/fountain.pde"> DOWNLOAD </a></strong>
@@ -256,7 +259,7 @@
                             <h2>FIRE !</h2>
                             <hr class="star-primary">
                             <img src="resources/out.gif" class="img-responsive img-centered" alt="">
-                            <p></p>
+                            <p>Fire is a 3D particle system that simulates fire. The spawn rate for particles is 2000 per sec and there are drawn as 2D circles in the animation. The particles are given random velocity at first, but as time pass they eventually come to middle and create a fire that looks like real. The circles drawn are transparent so we can have a 3D feel. After the particle dies, it became a new particle that now simulates smoke. And this creates a smoke like feeling at the top of the fire. This animation has implemented a simpler camera control system then the bouncing ball. It uses keyboard 'WASD' to move camera and arrow keys to move the view angle. This animation runs at 15~20 fps on a Macbook pro retina 13 2015</p>
                             <ul class="list-inline item-details">
                                 <li>
                                     <strong><a href="Homework1_paritical_system/Homework1_paritical_system.pde"> DOWNLOAD </a></strong>
@@ -281,10 +284,10 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>FIRE WORKS !</h2>
+                            <h2>FIREWORKS !</h2>
                             <hr class="star-primary">
                             <img src="resources/hw1_firework_illustration.gif" class="img-responsive img-centered" alt="">
-                            <p></p>
+                            <p>Fireworks is a 3D particle system that simulates fireworks. The animation first creates a firework at fixed position and then the user can click the screen and there will be a new firework at the point where the user clicks. Each batch of firework is 500 circles in 3D. And each particle is effected by gravity. This animation is runned at 30 fps on a Macbook pro retina 13 2015. Audio is also implemented in this animation, everytime a new firework appear a firework sound is made. To check the audio in live go to:<a href="https://youtu.be/V6QFWTQArDE"> Youtube </a> </p>
                             <ul class="list-inline item-details">
                                 <li>
                                     <strong><a href="Homework1_fireworks/Homework1_fireworks.pde"> DOWNLOAD </a></strong>

@@ -1,4 +1,9 @@
 import java.util.ArrayList;
+import ddf.minim.*;
+
+Minim minim;
+AudioPlayer player;
+AudioInput input;
 
 ArrayList<Spark> sparks = new ArrayList<Spark>();
 
@@ -14,6 +19,11 @@ void setup()
   smooth();
   addFireWork(200,200,-500);
   background(0);
+  
+  minim = new Minim(this);
+  player = minim.loadFile("fireworks.mp3");
+  input = minim.getLineIn();
+  
   
   startTime = millis();
 }
@@ -52,6 +62,7 @@ void draw()
     }
   }
   filter(18);
+  println(frameRate);
 }
 
 void addFireWork(float a, float b, float c)
@@ -77,7 +88,10 @@ void addFireWork(float a, float b, float c)
 
 void mousePressed()
 {
+  player.close();
   addFireWork(mouseX, mouseY, -500);
+  player = minim.loadFile("fireworks.mp3");
+  player.play();
 }
 
 
