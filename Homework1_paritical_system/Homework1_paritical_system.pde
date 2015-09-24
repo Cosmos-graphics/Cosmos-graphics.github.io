@@ -1,6 +1,8 @@
 import damkjer.ocd.*;
 import java.util.ArrayList;
 
+int startTime;
+int elapsedTime;
 
 int genRate = 2000;
 int timer;
@@ -28,7 +30,7 @@ void setup()
 	smooth();
  cameraPos = new PVector(0, -height/2, -(height/2.0) / tan(PI*30.0 / 180.0));
  cameraView = new PVector(0, height/2, (height/2.0) / tan(PI*30.0 / 180.0));
-	timer = millis();
+ startTime = millis();
 	camera(cameraPos.x, cameraPos.y, cameraPos.z,
 			cameraPos.x + cameraView.x, cameraPos.y + cameraView.y, cameraPos.z + cameraView.z,
 			0,1,0);
@@ -166,6 +168,10 @@ void draw()
 	lights();
   updateCamera();
   
+  elapsedTime = millis() - startTime; 
+  startTime = millis(); 
+  surface.setTitle("Proj-Title FPS: " + 1000.0/elapsedTime);
+  
   camera(cameraPos.x, cameraPos.y, cameraPos.z,
           cameraPos.x + cameraView.x, cameraPos.y + cameraView.y, cameraPos.z + cameraView.z,
         0,1,0);
@@ -174,7 +180,6 @@ void draw()
 	drawParticles(1000/frameRate);
 	drawSmoke(1000/frameRate);
 	System.out.println(frameRate);
-	timer=millis();
 }
 
 void updateCamera()

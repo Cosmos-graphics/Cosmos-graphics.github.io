@@ -5,18 +5,27 @@ ArrayList<Spark> sparks = new ArrayList<Spark>();
 float gravity = 0.2;
 float sparkC = 500;
 
+int startTime;
+int elapsedTime;
+
 void setup()
 {
   size(800,800, P3D);
   smooth();
   addFireWork(200,200,-500);
   background(0);
+  
+  startTime = millis();
 }
 
 void draw()
 {
   background(0);
   lights();
+  elapsedTime = millis() - startTime; 
+  startTime = millis(); 
+  surface.setTitle("Proj-Title FPS: " + 1000.0/elapsedTime);
+  
   for(Spark spark : sparks)
   {
 

@@ -4,6 +4,8 @@ ArrayList<PVector> pos = new ArrayList<PVector>();
 ArrayList<Float> span = new ArrayList<Float>();
 ArrayList<PVector> v = new ArrayList<PVector>();
 
+int startTime;
+int elapsedTime;
 
 float particleLifeSpan = 1.7f;
 int genRate = 3000;
@@ -36,7 +38,7 @@ void setup() {
   
   // initilization
   
-  
+  startTime = millis();
   
   
 }
@@ -50,6 +52,11 @@ void draw() {
   rotateX(rotx);
   rotateY(roty);
   scale(s);
+  
+  elapsedTime = millis() - startTime; 
+  startTime = millis(); 
+  surface.setTitle("Proj-Title FPS: " + 1000.0/elapsedTime);
+  
   drawScene();
   genParticles(1000/frameRate);
   drawParticles(1000/frameRate);

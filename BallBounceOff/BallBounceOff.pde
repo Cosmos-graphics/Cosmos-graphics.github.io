@@ -16,7 +16,8 @@ float roty = 0;
 float tx = 0.0;
 float ty = 0.0;
 float s = 1.0;
-
+int startTime;
+int elapsedTime;
 
 void setup()
 {
@@ -26,6 +27,7 @@ void setup()
   camera(cx, cy, cz,
         0.0, 0.0, 0.0, 
         0.0, 1.0, 0.0);
+  startTime = millis();
 }
 
 void draw(){
@@ -37,6 +39,11 @@ void draw(){
   rotateX(rotx);
   rotateY(roty);
   scale(s);
+  
+  elapsedTime = millis() - startTime;
+  startTime = millis();
+  surface.setTitle("Proj-Title FPS: " + 1000.0/elapsedTime);
+  
   //translate(tx, ty, tz);
   env.show();
   ball.move();
