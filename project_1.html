@@ -26,6 +26,9 @@
     	else {
       		$('.toc-wrapper').pushpin({ top: 0 });
     	}
+      $(document).ready(function(){
+      $('.materialboxed').materialbox();
+      });
   		});
 
       </script>
@@ -42,7 +45,7 @@
       
    <div class="row">
 
-           <div class="col s3">
+      <div class="col s3">
         <!-- Grey navigation panel -->
 
         <div id="accordion" class="section scrollspy">
@@ -112,7 +115,7 @@
                 </div>
             </li>
             </ul>
-            </div>
+          </div>
       </div>
 
       <div class="col s9">
@@ -120,56 +123,77 @@
 
      <div class="row">
     <div class="col s12 m9 l10">
-      <div id="introduction" class="section scrollspy">
-        <h2 class="header">Graphics Illustration</h2>
-        <p class="caption">
-        	Graphics Illustration created by Wenhan (Cosmos) Zhu and Zixiao Wang. This website is created for holding the graphical illustrations created for CSci 5611 at the University of Minnesota. Graphics Illustration's goal is to host some of our most besting looking animation created for this course and provide a easier way for people who wants to see it. 
-        </p>
-      </div>
 
-<div id="examples" class="section scrollspy">
-        <h3 class="header light">Examples</h3>
-        <p class="light"> Here are some of the examples that we created and we are happy to share them with you.
+<div id="bouncing_ball" class="section scrollspy">
+        <h3 class="header light">Bouncing Ball</h3>
+        <p class="light">
         <div class="row">
 				        <div class="col s12 m9">
-				          <div class="card">
-				            <div class="card-image">
-				              <img src="assets/project_1_bouncing_ball.gif">
-				              <span class="card-title">Bouncing Ball</span>
-				            </div>
-				            <div class="card-action">
-				              <a href="#">Details</a>
-				            </div>
-				          </div>
+                    <img class="materialboxed" data-caption="Bouncing Ball" width="640" src="assets/project_1_bouncing_ball.gif">
+                    <p>
+                Ball Bouncing Off is implemented in 3D. The ball has a fixed initial position and velocity. The ball's velocity is then effected by gravity. The ball is able to bounce around freely in the box. The framerate of this animation is fixed at 60 fps on a Macbook pro retina 13 2015. This animation has a user controled camera system that operates as following, click and drag to change view angle, scroll to make animation closer and further, right click and drag to change animation location. </p>
 				        </div>
+
 				      </div>
         </p>
       </div>
 
+<div id="fountain" class="section scrollspy">
+        <h3 class="header light">Fountain</h3>
+        <p class="light">
+        <div class="row">
+                <div class="col s12 m9">
+                    <img class="materialboxed" data-caption="Fountain" width="640" src="assets/project_1_fountain.gif">
+                    <p>The fountain is a partical system that simulates a fountain in 3D. The generate rate is set to 3000 per sec and the particles are drawn as spheres with decresed sphere detail. We were able to achieve 32 fps on a Dell laptop with GT630M. The fountain has the same camera control as the bouncing ball. </p>
+                           
+                </div>
 
-      <div id="details" class="section scrollspy">
-        <h3 class="header light">Details</h3>
-        <p class="light"> The illustration created are from 2 platforms. One is a Macbook pro retina 13 2015 and the other is a Dell Inspire laptop. The macbook is powered by an intell core i7 dual core processor with HD 61000 graphics. And the dell laptop is powered with intell core i5 dual core and Nvidia GT 630M. In each illustration, there will be details about which laptop is running the animation and how is the animation working. 
+              </div>
         </p>
       </div>
 
 
+<div id="fire_simulation" class="section scrollspy">
+        <h3 class="header light">Fire Simulation</h3>
+        <p class="light">
+        <div class="row">
+                <div class="col s12 m9">
+                    <img class="materialboxed" data-caption="Fire Simulation" width="640" src="assets/project_1_fire_simulation.gif">
+                    <p>Fire is a 3D particle system that simulates fire. The spawn rate for particles is 2000 per sec and there are drawn as 2D circles in the animation. The particles are given random velocity at first, but as time pass they eventually come to middle and create a fire that looks like real. The circles drawn are transparent so we can have a 3D feel. After the particle dies, it became a new particle that now simulates smoke. And this creates a smoke like feeling at the top of the fire. This animation has implemented a simpler camera control system then the bouncing ball. It uses keyboard 'WASD' to move camera and arrow keys to move the view angle. This animation runs at 15~20 fps on a Macbook pro retina 13 2015</p>
+                            
+                           
+                </div>
 
-      <div id="tools" class="section scrollspy">
-        <h3 class="header light">Software and Tools</h3>
-        <p class="light"> The animations are created by Processing. And the platforms that we developed them are MAC OS X 10.11 and Ubuntu 14.04. This webpage is powered by <a href="http://materializecss.com/">Materialize</a>. 
+              </div>
         </p>
       </div>
+
+      <div id="fireworks" class="section scrollspy">
+        <h3 class="header light">Fireworks</h3>
+        <p class="light">
+        <div class="row">
+                <div class="col s12 m9">
+                    <img class="materialboxed" data-caption="Fountain" width="640" src="assets/project_1_fireworks.gif">
+                    <p>Fireworks is a 3D particle system that simulates fireworks. The animation first creates a firework at fixed position and then the user can click the screen and there will be a new firework at the point where the user clicks. Each batch of firework is 500 circles in 3D. And each particle is effected by gravity. This animation is runned at 30 fps on a Macbook pro retina 13 2015. Audio is also implemented in this animation, everytime a new firework appear a firework sound is made. To check the audio in live go to:<a href="https://youtu.be/V6QFWTQArDE"> Youtube </a> </p>
+                            
+                           
+                </div>
+
+              </div>
+        </p>
+      </div>
+
+
     </div>
 
 
     <div class="col hide-on-small-only m3 l2">
           <div class="toc-wrapper">
       <ul class="section table-of-contents">
-        <li><a href="#introduction">Introduction</a></li>
-        <li><a href="#examples">Examples</a></li>
-        <li><a href="#details">Details</a></li>
-        <li><a href="#tools">Software and Tools</a></li>
+        <li><a href="#bouncing_ball">Bouncing Ball</a></li>
+        <li><a href="#fountain">Fountain</a></li>
+        <li><a href="#fire_simulation">Fire Simulation</a></li>
+        <li><a href="#fireworks">Fireworks</a></li>
       </ul>
       </div>
     </div>
