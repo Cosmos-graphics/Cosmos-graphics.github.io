@@ -26,9 +26,7 @@
     	else {
       		$('.toc-wrapper').pushpin({ top: 0 });
     	}
-      $(document).ready(function(){
       $('.materialboxed').materialbox();
-      });
   		});
 
       </script>
@@ -129,9 +127,25 @@
         <p class="light">
         <div class="row">
 				        <div class="col s12 m9">
-                    <img class="materialboxed" data-caption="Bouncing Ball" width="640" src="assets/project_1_bouncing_ball.gif">
-                    <p>
-                Ball Bouncing Off is implemented in 3D. The ball has a fixed initial position and velocity. The ball's velocity is then effected by gravity. The ball is able to bounce around freely in the box. The framerate of this animation is fixed at 60 fps on a Macbook pro retina 13 2015. This animation has a user controled camera system that operates as following, click and drag to change view angle, scroll to make animation closer and further, right click and drag to change animation location. </p>
+                <ul class="collapsible" data-collapsible="accordion">
+                  <li>
+                  <div class="collapsible-header"><img class="materialboxed" data-caption="Bouncing Ball" width="640" src="assets/project_1_bouncing_ball.gif"> </div>
+                  </li>
+                  <li>
+                    <div class="collapsible-header">Running Status</div>
+                    <div class="collapsible-body"><p>
+                Running with Macbook pro retina 13 at constant 60 fps. </p></div>
+                  </li>
+                  <li>
+                    <div class="collapsible-header">Implementation Details</div>
+                    <div class="collapsible-body"><p>
+                Ball Bouncing Off is implemented in 3D. The ball has a fixed initial position and velocity. The ball's velocity is then effected by gravity. The ball is able to bounce around freely in the box. This animation has a user controled camera system that operates as following, click and drag to change view angle, scroll to make animation closer and further, right click and drag to change animation location. </p></div>
+                  </li>
+                  <li>
+                  <div class="collapsible-header"><strong><a href="ProcessingCode/project_1_bouncing_ball/project_1_bouncing_ball.pde"> DOWNLOAD </a></strong></div>
+                  </li>
+                  </ul>
+                    
 				        </div>
 
 				      </div>
@@ -142,9 +156,28 @@
         <h3 class="header light">Fountain</h3>
         <p class="light">
         <div class="row">
+
                 <div class="col s12 m9">
-                    <img class="materialboxed" data-caption="Fountain" width="640" src="assets/project_1_fountain.gif">
-                    <p>The fountain is a partical system that simulates a fountain in 3D. The generate rate is set to 3000 per sec and the particles are drawn as spheres with decresed sphere detail. We were able to achieve 32 fps on a Dell laptop with GT630M. The fountain has the same camera control as the bouncing ball. </p>
+                <ul class="collapsible" data-collapsible="accordion">
+                  <li>
+                  <div class="collapsible-header"><img class="materialboxed" data-caption="Fountain" width="640" src="assets/project_1_fountain.gif"> </div>
+                  </li>
+                  <li>
+                    <div class="collapsible-header">Running Status</div>
+                    <div class="collapsible-body"><p>
+                Running with Dell Inspire at around 32 fps. </p></div>
+                  </li>
+                  <li>
+                    <div class="collapsible-header">Implementation Details</div>
+                    <div class="collapsible-body">
+                    
+                    <p>The fountain is a partical system that simulates a fountain in 3D. The generate rate is set to 3000 per sec and the particles are drawn as spheres with decresed sphere detail.The fountain has the same camera control as the bouncing ball. </p></div>
+                  </li>
+                  <li>
+                  <div class="collapsible-header"><strong><a href="ProcessingCode/project_1_fountain/project_1_fountain.pde"> DOWNLOAD </a></strong></div>
+                  </li>
+                  </ul>
+
                            
                 </div>
 
@@ -158,8 +191,27 @@
         <p class="light">
         <div class="row">
                 <div class="col s12 m9">
-                    <img class="materialboxed" data-caption="Fire Simulation" width="640" src="assets/project_1_fire_simulation.gif">
-                    <p>Fire is a 3D particle system that simulates fire. The spawn rate for particles is 2000 per sec and there are drawn as 2D circles in the animation. The particles are given random velocity at first, but as time pass they eventually come to middle and create a fire that looks like real. The circles drawn are transparent so we can have a 3D feel. After the particle dies, it became a new particle that now simulates smoke. And this creates a smoke like feeling at the top of the fire. This animation has implemented a simpler camera control system then the bouncing ball. It uses keyboard 'WASD' to move camera and arrow keys to move the view angle. This animation runs at 15~20 fps on a Macbook pro retina 13 2015</p>
+                  <ul class="collapsible" data-collapsible="accordion">
+                  <li>
+                  <div class="collapsible-header"><img class="materialboxed" data-caption="Fire Simulation" width="640" src="assets/project_1_fire_simulation.gif">
+                    </div>
+                  </li>
+                  <li>
+                    <div class="collapsible-header">Running Status</div>
+                    <div class="collapsible-body"><p>
+                Running with Macbook pro retina 13 at around 15~20 fps. </p></div>
+                  </li>
+                  <li>
+                    <div class="collapsible-header">Implementation Details</div>
+                    <div class="collapsible-body">
+                                        <p>Fire is a 3D particle system that simulates fire. The spawn rate for particles is 2000 per sec and there are drawn as 2D circles in the animation. The particles are given random velocity at first, but as time pass they eventually come to middle and create a fire that looks like real. The circles drawn are transparent so we can have a 3D feel. After the particle dies, it became a new particle that now simulates smoke. And this creates a smoke like feeling at the top of the fire. This animation has implemented a simpler camera control system then the bouncing ball. It uses keyboard 'WASD' to move camera and arrow keys to move the view angle. </p>
+                                        </div>
+                  </li>
+                  <li>
+                  <div class="collapsible-header"><strong><a href="ProcessingCode/project_1_fire_simulation/project_1_fire_simulation.pde"> DOWNLOAD </a></strong></div>
+                  </li>
+                  </ul>
+
                             
                            
                 </div>
@@ -173,8 +225,27 @@
         <p class="light">
         <div class="row">
                 <div class="col s12 m9">
-                    <img class="materialboxed" data-caption="Fountain" width="640" src="assets/project_1_fireworks.gif">
-                    <p>Fireworks is a 3D particle system that simulates fireworks. The animation first creates a firework at fixed position and then the user can click the screen and there will be a new firework at the point where the user clicks. Each batch of firework is 500 circles in 3D. And each particle is effected by gravity. This animation is runned at 30 fps on a Macbook pro retina 13 2015. Audio is also implemented in this animation, everytime a new firework appear a firework sound is made. To check the audio in live go to:<a href="https://youtu.be/V6QFWTQArDE"> Youtube </a> </p>
+                                  <ul class="collapsible" data-collapsible="accordion">
+                  <li>
+                  <div class="collapsible-header"><img class="materialboxed" data-caption="Fountain" width="640" src="assets/project_1_fireworks.gif">
+                    
+                    </div>
+                  </li>
+                  <li>
+                    <div class="collapsible-header">Running Status</div>
+                    <div class="collapsible-body"><p>
+                Running with Macbook pro retina 13 at around 30 fps. </p></div>
+                  </li>
+                  <li>
+                    <div class="collapsible-header">Implementation Details</div>
+                    <div class="collapsible-body">
+                                        <p>Fireworks is a 3D particle system that simulates fireworks. The animation first creates a firework at fixed position and then the user can click the screen and there will be a new firework at the point where the user clicks. Each batch of firework is 500 circles in 3D. And each particle is effected by gravity. Audio is also implemented in this animation, everytime a new firework appear a firework sound is made. To check the audio in live go to:<a href="https://youtu.be/V6QFWTQArDE"> Youtube </a> </p></div>
+                  </li>
+                <li>
+                  <div class="collapsible-header"><strong><a href="ProcessingCode/project_1_fireworks/project_1_fireworks.pde"> DOWNLOAD </a></strong></div>
+                  </li>
+                  </ul>
+                    
                             
                            
                 </div>
