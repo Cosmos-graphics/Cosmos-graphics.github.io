@@ -157,119 +157,63 @@ $(document).ready(function(){
 					<div class="row">
 						<div class="col s12 m9 l10">
 
-							<div id="bouncing_ball" class="section scrollspy">
-								<h3 class="header light">Bouncing Ball</h3>
+							<div id="1d_water" class="section scrollspy">
+								<h3 class="header light">1D Water</h3>
 								<p class="light">
 								<div class="row">
 									<div class="col s12 m9">
 										<div class="card">
 											<div class="card-image">
-												<img class="materialboxed" data-caption="Bouncing Ball" src="assets/project_1_bouncing_ball.gif">
-												<span class="card-title">Bouncing Ball</span>
+												<img class="materialboxed" data-caption="Bouncing Ball" src="assets/project_2_1d_water.gif">
+												<span class="card-title">1D Water</span>
 											</div>
 											<div class="card-action">
 												<ul class="collapsible" data-collapsible="accordion">
 													<li>
-														<div class="collapsible-header">Running Status</div>
+														<div class="collapsible-header">Video with Sound</div>
 														<div class="collapsible-body"><p>
-															Running with Macbook pro retina 13 at constant 60 fps. </p></div>
+															<video width="400" controls>
+																<source src="assets/project_2_1D_water.mov" type="video/mp4">
+																Your browser does not support HTML5 video.
+															</video> </p></div>
 													</li>
-													<li>
-														<div class="collapsible-header">Implementation Details</div>
-														<div class="collapsible-body"><p>
-															Ball Bouncing Off is implemented in 3D. The ball has a fixed initial position and velocity. The ball's velocity is then effected by gravity. The ball is able to bounce around freely in the box. This animation has a user controled camera system that operates as following, click and drag to change view angle, scroll to make animation closer and further, right click and drag to change animation location. </p></div>
-													</li>
-													<li>
-														<div class="collapsible-header"><strong><a href="ProcessingCode/project_1_bouncing_ball/project_1_bouncing_ball.pde"> DOWNLOAD </a></strong></div>
-													</li>
-												</ul>
-											</div>
-
-										</div>
-
-									</div>
-
-								</div>
-								</p>
-							</div>
-
-							<div id="fountain" class="section scrollspy">
-								<h3 class="header light">Fountain</h3>
-								<p class="light">
-								<div class="row">
-
-									<div class="col s12 m9">
-										<div class="card">
-											<div class="card-image">
-												<img class="materialboxed" data-caption="Fountain" src="assets/project_1_fountain.gif">
-												<span class="card-title">Foutain</span>
-											</div>
-											<div class="card-action">
-												<ul class="collapsible" data-collapsible="accordion">
-
-
 													<li>
 														<div class="collapsible-header">Running Status</div>
 														<div class="collapsible-body"><p>
-															Running with Dell Inspire at around 32 fps. </p></div>
+															Running with Macbook pro retina 13 at 180 ~ 185 fps. </p></div>
 													</li>
 													<li>
-														<div class="collapsible-header">Implementation Details</div>
+														<div class="collapsible-header">Resources Used</div>
 														<div class="collapsible-body">
-
-															<p>The fountain is a partical system that simulates a fountain in 3D. The generate rate is set to 3000 per sec and the particles are drawn as spheres with decresed sphere detail.The fountain has the same camera control as the bouncing ball. </p></div>
-													</li>
-													<li>
-														<div class="collapsible-header"><strong><a href="ProcessingCode/project_1_fountain/project_1_fountain.pde"> DOWNLOAD </a></strong></div>
-													</li>
-												</ul>
-											</div>
-										</div>
-
-
-
-									</div>
-
-								</div>
-								</p>
-							</div>
-
-
-							<div id="fire_simulation" class="section scrollspy">
-								<h3 class="header light">Fire Simulation</h3>
-								<p class="light">
-								<div class="row">
-									<div class="col s12 m9">
-
-
-										<div class="card">
-											<div class="card-image">
-												<img class="materialboxed" data-caption="Fire Simulation" src="assets/project_1_fire_simulation.gif">
-												<span class="card-title">Fire Simulation</span>
-											</div>
-											<div class="card-action">
-												<ul class="collapsible" data-collapsible="accordion">
-													<li>
-														<div class="collapsible-header">Running Status</div>
-														<div class="collapsible-body"><p>
-															Running with Macbook pro retina 13 at around 15~20 fps. </p></div>
-													</li>
-													<li>
-														<div class="collapsible-header">Implementation Details</div>
-														<div class="collapsible-body">
-															<p>Fire is a 3D particle system that simulates fire. The spawn rate for particles is 2000 per sec and there are drawn as 2D circles in the animation. The particles are given random velocity at first, but as time pass they eventually come to middle and create a fire that looks like real. The circles drawn are transparent so we can have a 3D feel. After the particle dies, it became a new particle that now simulates smoke. And this creates a smoke like feeling at the top of the fire. This animation has implemented a simpler camera control system then the bouncing ball. It uses keyboard 'WASD' to move camera and arrow keys to move the view angle. </p>
+															<p>
+																The shallow water equation used is from this <a href="https://www.math.hmc.edu/~dyong/math164/2007/park/finalreport.pdf"> website </a> <br>
+																The sound file used is from <a href="http://soundbible.com/384-Single-Water-Droplet.html"> here </a> <br>
+															</p>
 														</div>
 													</li>
 													<li>
-														<div class="collapsible-header"><strong><a href="ProcessingCode/project_1_fire_simulation/project_1_fire_simulation.pde"> DOWNLOAD </a></strong></div>
+														<div class="collapsible-header">Implementation Details</div>
+														<div class="collapsible-body"><p>
+															1D water is implemented in 2D in processing. The animation will start after the user clicks in the screen. And after that clicking in the screen will result in a water drop with height of the mouse at the location. The initial water status is a s-function(Sigmoid function) that is configured to shape perfectly for the screen and for better illustration. The shallow water equation is inspired from the website mentioned above. </p></div>
+													</li>
+													<li>
+														<div class="collapsible-header">Key Points Illustrated</div>
+														<div class="collapsible-body">
+															<p>
+																1D Shallow Water Equation<br>
+																Semi Implicit Integrator<br>
+																User interactive with system<br>
+																Real time sound effect based on event<br>
+															</p>
+														</div>
+													</li>													
+													<li>
+														<div class="collapsible-header"><strong><a href="ProcessingCode/project_2_1d_water/project_2_1d_water.pde"> DOWNLOAD </a></strong></div>
 													</li>
 												</ul>
 											</div>
+
 										</div>
-
-
-
-
 
 									</div>
 
@@ -277,46 +221,55 @@ $(document).ready(function(){
 								</p>
 							</div>
 
-							<div id="fireworks" class="section scrollspy">
-								<h3 class="header light">Fireworks</h3>
+							<div id="2d_water" class="section scrollspy">
+								<h3 class="header light">2D Water</h3>
 								<p class="light">
 								<div class="row">
 									<div class="col s12 m9">
-
 										<div class="card">
 											<div class="card-image">
-												<img class="materialboxed" data-caption="Fountain" src="assets/project_1_fireworks.gif">
-												<span class="card-title">Fireworks</span>
+												<img class="materialboxed" data-caption="Bouncing Ball" src="assets/project_2_2d_water.gif">
+												<span class="card-title">2D Water</span>
 											</div>
 											<div class="card-action">
 												<ul class="collapsible" data-collapsible="accordion">
-
-
 													<li>
 														<div class="collapsible-header">Running Status</div>
 														<div class="collapsible-body"><p>
-															Running with Macbook pro retina 13 at around 30 fps. </p></div>
+															Running with Macbook pro retina 13 at 180 ~ 185 fps. </p></div>
 													</li>
 													<li>
 														<div class="collapsible-header">Implementation Details</div>
-														<div class="collapsible-body">
-															<p>Fireworks is a 3D particle system that simulates fireworks. The animation first creates a firework at fixed position and then the user can click the screen and there will be a new firework at the point where the user clicks. Each batch of firework is 500 circles in 3D. And each particle is effected by gravity. Audio is also implemented in this animation, everytime a new firework appear a firework sound is made. To check the audio in live go to:<a href="https://youtu.be/V6QFWTQArDE"> Youtube </a> </p></div>
+														<div class="collapsible-body"><p>
+															2D water is implemented in 3D in processing. Pressing 's' will start and pause the animation. Pressing 'd' will release a water drop at the middle of the water surface. The inital configuration is a function that is based on the position of x and z coordinates. </p></div>
 													</li>
 													<li>
-														<div class="collapsible-header"><strong><a href="ProcessingCode/project_1_fireworks/project_1_fireworks.pde"> DOWNLOAD </a></strong></div>
+														<div class="collapsible-header">Key Points Illustrated</div>
+														<div class="collapsible-body">
+															<p>
+																2D Shallow Water Equation<br>
+																Eulerian Integrator<br>
+																User interactive with system (Keybased control of start, pause and water drop)<br>
+																3D user controlled camera with freedom of zoom, translate and rotate.<br>
+																Real-time rendering<br>
+															</p>
+														</div>
+													</li>													
+													<li>
+														<div class="collapsible-header"><strong><a href="ProcessingCode/project_2_2d_water/project_2_2d_water.pde"> DOWNLOAD </a></strong></div>
 													</li>
 												</ul>
-
 											</div>
+
 										</div>
-
-
 
 									</div>
 
 								</div>
 								</p>
 							</div>
+
+
 
 
 						</div>
@@ -325,10 +278,8 @@ $(document).ready(function(){
 						<div class="col hide-on-small-only m3 l2">
 							<div class="toc-wrapper">
 								<ul class="section table-of-contents">
-									<li><a href="#bouncing_ball">Bouncing Ball</a></li>
-									<li><a href="#fountain">Fountain</a></li>
-									<li><a href="#fire_simulation">Fire Simulation</a></li>
-									<li><a href="#fireworks">Fireworks</a></li>
+									<li><a href="#1d_water">1D_water</a></li>
+									<li><a href="#2d_water">2D_water</a></li>
 								</ul>
 							</div>
 						</div>
