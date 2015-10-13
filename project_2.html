@@ -14,6 +14,7 @@
 		<!--Import jQuery before materialize.js-->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script type="text/javascript" src="js/processing.js"></script>
 		<script>
 $(document).ready(function(){
 	$('.scrollspy').scrollSpy();
@@ -192,9 +193,10 @@ $(document).ready(function(){
 														</div>
 													</li>
 													<li>
-														<div class="collapsible-header">Implementation Details</div>
+														<div class="collapsible-header">Implementation Details and Problem faced</div>
 														<div class="collapsible-body"><p>
-															1D water is implemented in 2D in processing. The animation will start after the user clicks in the screen. And after that clicking in the screen will result in a water drop with height of the mouse at the location. The initial water status is a s-function(Sigmoid function) that is configured to shape perfectly for the screen and for better illustration. The shallow water equation is inspired from the website mentioned above. </p></div>
+															1D water is implemented in 2D in processing. The animation will start after the user clicks in the screen. And after that clicking in the screen will result in a water drop with height of the mouse at the location. The initial water status is a s-function(Sigmoid function) that is configured to shape perfectly for the screen and for better illustration. The shallow water equation is inspired from the website mentioned above. <br>
+															The main difficulty when we faced this problem was that the equations are in partial differential forms and we did not have the knowlege of such equations. We googled online for better understanding and found the paper mentioned before and after hours of trying and test, it now works pretty good. We are satisfied with the results except for the waved created by the water drop. We looked into a lot of things that could effect this but due to time limit we did not suceed in fixing it. </p></div>
 													</li>
 													<li>
 														<div class="collapsible-header">Key Points Illustrated</div>
@@ -239,9 +241,10 @@ $(document).ready(function(){
 															Running with Macbook pro retina 13 at 180 ~ 185 fps. </p></div>
 													</li>
 													<li>
-														<div class="collapsible-header">Implementation Details</div>
+														<div class="collapsible-header">Implementation Details and Problem faced</div>
 														<div class="collapsible-body"><p>
-															2D water is implemented in 3D in processing. Pressing 's' will start and pause the animation. Pressing 'd' will release a water drop at the middle of the water surface. The inital configuration is a function that is based on the position of x and z coordinates. </p></div>
+															2D water is implemented in 3D in processing. Pressing 's' will start and pause the animation. Pressing 'd' will release a water drop at the middle of the water surface. The inital configuration is a function that is based on the position of x and z coordinates.<br>
+															We incountered many problems in this animation. We managed to fix some, however, we lack the time and energy to do something more awesome. One of the problems we faced was transforming the 1D shallow water equation into 2D. We tried many fancy version of the equations, but they did not look good. So we went with a easier way for just considering the 4 points near by and the results were good. Another problem we had and we did not have the time to fix it was when adding lights and fill the quads with color, every will look super bad. The lights are very confused so each cell will either be dark or light. And since we only have a limited number of cells the lights looked like we have mosaic all over the place and it is kind of gross. </p></div>
 													</li>
 													<li>
 														<div class="collapsible-header">Key Points Illustrated</div>
@@ -269,7 +272,52 @@ $(document).ready(function(){
 								</p>
 							</div>
 
+							<div id="sph" class="section scrollspy">
+								<h3 class="header light">SPH</h3>
+								<p class="light">
+								<div class="row">
+									<div class="col s12 m9">
+										<div class="card">
+											<div class="card-image">
+												<img class="materialboxed" data-caption="SPH 2D" src="assets/project_2_sph.gif">
+												<span class="card-title">SPH 2D</span>
+											</div>
+											<div class="card-action">
+												<ul class="collapsible" data-collapsible="accordion">
+													<li>
+														<div class="collapsible-header">Running Status</div>
+														<div class="collapsible-body"><p>
+															Running with Macbook pro retina 13 at 60 fps when under a few hundred particles. Framerate significantly drops when particle numbers exceed a few thousand to around 10 fps with ellipse and 30 fps with points. </p></div>
+													</li>
+													<li>
+														<div class="collapsible-header">Implementation Details and Problem faced</div>
+														<div class="collapsible-body"><p>
+															SPH is inspired by the animation showed during class from <a href="https://www.youtube.com/watch?v=0bL80G1HX9w"> here</a>. We implemented a simple 2D sph with cells of width 10. And we had a particle system that can be turned on and off by pressing "s". And a toggle to show particles as circles or points with hotkey "p". <br>
+															We encountered a lot of problems in this animation. The biggest problem is when we first implemented the math, we observed a stange pattern. The particles at the very bottom does not act as expected. After digesting the equations used, we found out that the particles at the very bottom will only be taking forces from the upper and left or right particles. So it is impossible for them to have a velocity that is towards the top. And as a result every particle that makes to the bottom it will stay in the bottom. This leads to our animation very unstable and every particle that enters the bottom does not leave. To solve this, we considered adding a random offset at each time step that the particle will move up/down/left/right 2 pixels at a possiblity of 20%. After adding this offset everythings looks way better. </p></div>
+													</li>
+													<li>
+														<div class="collapsible-header">Key Points Illustrated</div>
+														<div class="collapsible-body">
+															<p>
+																Particle system integration with 2D SPH fluid sim<br>
+																User interactive with system (Keybased control particle system)<br>
+																Real-time rendering<br>
+															</p>
+														</div>
+													</li>													
+													<li>
+														<div class="collapsible-header"><strong><a href="ProcessingCode/project_2_sph/project_2_sph.pde"> DOWNLOAD </a></strong></div>
+													</li>
+												</ul>
+											</div>
 
+										</div>
+
+									</div>
+
+								</div>
+								</p>
+							</div>
 
 
 						</div>
@@ -280,6 +328,7 @@ $(document).ready(function(){
 								<ul class="section table-of-contents">
 									<li><a href="#1d_water">1D_water</a></li>
 									<li><a href="#2d_water">2D_water</a></li>
+									<li><a href="#sph">SPH</a></li>
 								</ul>
 							</div>
 						</div>
