@@ -1,4 +1,4 @@
-class DObject {
+class DObject { //<>// //<>// //<>// //<>// //<>//
   int numLengthParticles;
   int numWidthParticles;
   int numHeightParticles;
@@ -7,6 +7,9 @@ class DObject {
   float l0v; //  Particles rest length vertical
   float l0h; //  Particles rest length horizontal
   float l0l; //  Particles rest length longitudinal
+  float l0d_zox;
+  float l0d_zoy;
+  float l0d_xoy;
 
   float left;
   float right;
@@ -39,6 +42,10 @@ class DObject {
     float ydiv = (bottom - top) / (nhp-1);
     float zdiv = (front - back) / (nwp-1);
 
+    l0d_zox = sqrt(xdiv*xdiv + zdiv*zdiv);
+    l0d_zoy = sqrt(ydiv*ydiv + zdiv*zdiv);
+    l0d_xoy = sqrt(xdiv*xdiv + ydiv*ydiv);
+
     // position initilization
     for (int i = 0; i < nlp; i++) {
       for (int j = 0; j < nwp; j++) {
@@ -58,6 +65,34 @@ class DObject {
     }
   }
 
+  // reset-----------------------------------------
+  void reset()
+  {
+    // initial boundary of object
+    float xdiv = (right - left) / (numLengthParticles-1);
+    float ydiv = (bottom - top) / (numHeightParticles-1);
+    float zdiv = (front - back) / (numWidthParticles-1);
+
+    // position initilization
+    for (int i = 0; i < numLengthParticles; i++) {
+      for (int j = 0; j < numWidthParticles; j++) {
+        for (int k = 0; k < numHeightParticles; k++) {
+          p[i][j][k] = new PVector(left + i*xdiv, top + k*ydiv, back + j*zdiv);
+        }
+      }
+    }
+
+    // speed initilization
+    for (int i = 0; i < numLengthParticles; i++) {
+      for (int j = 0; j < numWidthParticles; j++) {
+        for (int k = 0; k < numHeightParticles; k++) {
+          vn[i][j][k] = new PVector(0, 0, 0);
+        }
+      }
+    }
+  }
+
+
   // -------------------------Draw----------------------------------
   void draw () {
     fill(0, 255, 255);
@@ -72,7 +107,7 @@ class DObject {
         endShape();
       }
     }
-    
+
     // bottom surface -- 
     for (int i = 0; i < numLengthParticles-1; i++) {
       for (int j = 0; j < numWidthParticles-1; j++) {
@@ -84,7 +119,7 @@ class DObject {
         endShape();
       }
     }
-    
+
     // right surface --
     for (int i = 0; i < numWidthParticles-1; i++) {
       for (int j = 0; j < numHeightParticles-1; j++) {
@@ -96,7 +131,7 @@ class DObject {
         endShape();
       }
     }
-    
+
     // left surface --
     for (int i = 0; i < numWidthParticles-1; i++) {
       for (int j = 0; j < numHeightParticles-1; j++) {
@@ -108,7 +143,7 @@ class DObject {
         endShape();
       }
     }
-    
+
     // back surface -- 
     for (int i = 0; i < numLengthParticles-1; i++) {
       for (int j = 0; j < numHeightParticles-1; j++) {
@@ -120,7 +155,7 @@ class DObject {
         endShape();
       }
     }
-    
+
     // front surface -- 
     for (int i = 0; i < numLengthParticles-1; i++) {
       for (int j = 0; j < numHeightParticles-1; j++) {
@@ -132,9 +167,8 @@ class DObject {
         endShape();
       }
     }
-    
   }
-  
+
   //-------------------detect collision with Env----------------------
   void detectCollision_Env(Environment env) {
     float envX = env.getX();
@@ -143,72 +177,72 @@ class DObject {
     float envHalfW = env.getWidth()/2;
     float envHalfH = env.getHeight()/2;
     float envHalfL = env.getLength()/2;
-    
-    float threshold = 1/1000;
+
+    float threshold = 1/100000;
     float bounce_factor = -0.6;
-    
+
     for (int i = 0; i < numLengthParticles; i++) {
       for (int j = 0; j < numWidthParticles; j++) {
         for (int k = 0; k < numHeightParticles; k++) {
           boolean f = false;
-          
-          if (p[i][j][k].y < envY - envHalfH) // left hand bottom
+
+          if (p[i][j][k].y < envY - envHalfH) // left hand top
           {
             vn[i][j][k].y = bounce_factor * vn[i][j][k].y;
             p[i][j][k].y = envY - envHalfH;
             f = true;
           }
-          
-          if (p[i][j][k].y > envY + envHalfH) // left hand top
+
+          if (p[i][j][k].y > envY + envHalfH) // left hand bottom
           {
             vn[i][j][k].y = bounce_factor * vn[i][j][k].y;
             p[i][j][k].y = envY + envHalfH;
             f = true;
           }
-          
+
           if (p[i][j][k].x < envX - envHalfW) // left
           {
             vn[i][j][k].x = bounce_factor * vn[i][j][k].x;
             p[i][j][k].x = envX - envHalfW;
             f = true;
           }
-          
+
           if (p[i][j][k].x > envX + envHalfW) // right
           {
             vn[i][j][k].x = bounce_factor * vn[i][j][k].x;
             p[i][j][k].x = envX + envHalfW;
             f = true;
           }
-          
+
           if (p[i][j][k].z < envZ - envHalfL) // behind
           {
             vn[i][j][k].z = bounce_factor * vn[i][j][k].z;
             p[i][j][k].z = envZ - envHalfL;
             f = true;
           }
-          
+
           if (p[i][j][k].z > envZ + envHalfL) // front
           {
             vn[i][j][k].z = bounce_factor * vn[i][j][k].z;
             p[i][j][k].z = envZ + envHalfL;
             f = true;
           }
-          
+
           if (f) {
             //-------------------------------------------------
             vn[i][j][k].mult(0.2); // friction
-            
+
             if (vn[i][j][k].x < threshold)
             {
               vn[i][j][k].x = 0.0;
             }
-            
-            
+
+
             if (vn[i][j][k].y < threshold)
             {
               vn[i][j][k].y = 0.0;
             }
-            
+
             if (vn[i][j][k].z < threshold)
             {
               vn[i][j][k].z = 0.0;
@@ -218,7 +252,7 @@ class DObject {
       }
     }
   }
-  
+
   // Collision Detection
   void detectCollision_Ball(Ball ball)
   {
@@ -229,29 +263,51 @@ class DObject {
           float l = ball.getR() + 3;
           if (d < l)
           {
+            // The normal from the center of circle to collision point
             PVector n = PVector.sub(p[i][j][k], ball.getPos());
             n.normalize();
+
+            // reverse object v
             PVector bounce = PVector.mult(n, PVector.dot(n, vn[i][j][k]));
-            vn[i][j][k].sub(PVector.mult(bounce, 1.05));
-            p[i][j][k].add(PVector.mult(n, ball.getR() - d + 3));
+            vn[i][j][k].sub(PVector.mult(bounce, 2));
+            p[i][j][k].add(PVector.mult(n, ball.getR() - d + 0.5));
+
+            // reverse ball v
+            PVector vb = new PVector(ball.getVx(), ball.getVy(), ball.getVz());
+            PVector bounce_ball = PVector.mult(n, PVector.dot(n, vb));
+            vb.sub(PVector.mult(bounce_ball, 2));
+            ball.setVx(vb.x);
+            ball.setVy(vb.y);
+            ball.setVz(vb.z);
           }
         }
       }
     }
   }
-  
+
   // Update vels. before pos.
   void update(Ball ball, Environment env) {
-    // loop through horizontal direction //<>//
+    //
+    float envX = env.getX();
+    float envY = env.getY();
+    float envZ = env.getZ();
+    float envHalfW = env.getWidth()/2;
+    float envHalfH = env.getHeight()/2;
+    float envHalfL = env.getLength()/2;
+
+    float threshold = 1/1000;
+    float bounce_factor = -0.8;
+
+    // loop through horizontal direction
     for (int i = 0; i < numLengthParticles - 1; i++) {
       for (int j = 0; j < numWidthParticles; j++) {
         for (int k = 0; k < numHeightParticles; k++) {
-        
+
           float f; // Force along thread
           PVector e = PVector.sub(p[i+1][j][k], (p[i][j][k])); // Unit length vetor from partical i,j to i+1,j
-          
+
           float l = PVector.dist(p[i][j][k], (p[i+1][j][k])); // Distance between two points
-          
+
           e = e.normalize(); // Normalize
           float v1 = PVector.dot(e, vn[i][j][k]);
           float v2 = PVector.dot(e, vn[i+1][j][k]);
@@ -261,20 +317,20 @@ class DObject {
         }
       }
     }
-    
-    // loop through vertical direction //<>//
+
+    // loop through vertical direction
     for (int i = 0; i < numLengthParticles; i++) {
       for (int j = 0; j < numWidthParticles - 1; j++) {
         for (int k = 0; k < numHeightParticles; k++) {
-        
+
           // left hand coordinate
           float f; // Force along thread
-          PVector e = PVector.sub(p[i][j+1][k],p[i][j][k]); // Unit length vetor from partical i,j to i+1,j
-          
+          PVector e = PVector.sub(p[i][j+1][k], p[i][j][k]); // Unit length vetor from partical i,j to i+1,j
+
           float l = PVector.dist(p[i][j][k], p[i][j+1][k]); // Distance between two points
-          
+
           e = e.div(l); // Normalize
-          
+
           float v1 = PVector.dot(e, vn[i][j][k]);
           float v2 = PVector.dot(e, vn[i][j+1][k]);
           f = -ks * (l0v - l) - kd * (v1 - v2);
@@ -283,20 +339,20 @@ class DObject {
         }
       }
     }
-    
-    // loop through longitudinal direction //<>//
+
+    // loop through longitudinal direction
     for (int i = 0; i < numLengthParticles; i++) {
       for (int j = 0; j < numWidthParticles; j++) {
         for (int k = 0; k < numHeightParticles - 1; k++) {
-        
+
           // left hand coordinate
           float f; // Force along thread
-          PVector e = PVector.sub(p[i][j][k+1],p[i][j][k]); // Unit length vetor from partical i,j to i+1,j
-          
+          PVector e = PVector.sub(p[i][j][k+1], p[i][j][k]); // Unit length vetor from partical i,j to i+1,j
+
           float l = PVector.dist(p[i][j][k], p[i][j][k+1]); // Distance between two points
-          
+
           e = e.div(l); // Normalize
-          
+
           float v1 = PVector.dot(e, vn[i][j][k]);
           float v2 = PVector.dot(e, vn[i][j][k+1]);
           f = -ks * (l0l - l) - kd * (v1 - v2);
@@ -305,20 +361,164 @@ class DObject {
         }
       }
     }
-    
-    
-    for (int i = 0; i < numLengthParticles; i++) { //<>//
+
+    // loop through diagonal zox direction
+    for (int i = 0; i < numLengthParticles - 1; i++) {
+      for (int j = 0; j < numWidthParticles - 1; j++) {
+        for (int k = 0; k < numHeightParticles; k++) {
+
+          // left hand coordinate
+          float f; // Force along thread
+          PVector e = PVector.sub(p[i+1][j+1][k], p[i][j][k]); // Unit length vetor from partical i,j to i+1,j
+
+          float l = PVector.dist(p[i][j][k], p[i+1][j+1][k]); // Distance between two points
+
+          e = e.div(l); // Normalize
+
+          float v1 = PVector.dot(e, vn[i][j][k]);
+          float v2 = PVector.dot(e, vn[i+1][j+1][k]);
+          f = -ks * (l0d_zox - l) - kd * (v1 - v2);
+          vn[i][j][k].add(PVector.mult(e, f));
+          vn[i+1][j+1][k].sub(PVector.mult(e, f));
+        }
+      }
+    }
+
+    // loop through diagonal zoy direction
+    for (int i = 0; i < numLengthParticles; i++) {
+      for (int j = 0; j < numWidthParticles - 1; j++) {
+        for (int k = 0; k < numHeightParticles - 1; k++) {
+
+          // left hand coordinate
+          float f; // Force along thread
+          PVector e = PVector.sub(p[i][j+1][k+1], p[i][j][k]); // Unit length vetor from partical i,j to i+1,j
+
+          float l = PVector.dist(p[i][j][k], p[i][j+1][k+1]); // Distance between two points
+
+          e = e.div(l); // Normalize
+
+          float v1 = PVector.dot(e, vn[i][j][k]);
+          float v2 = PVector.dot(e, vn[i][j+1][k+1]);
+          f = -ks * (l0d_zoy - l) - kd * (v1 - v2);
+          vn[i][j][k].add(PVector.mult(e, f));
+          vn[i][j+1][k+1].sub(PVector.mult(e, f));
+        }
+      }
+    }
+
+    // loop through diagonal xoy direction
+    for (int i = 0; i < numLengthParticles - 1; i++) {
+      for (int j = 0; j < numWidthParticles; j++) {
+        for (int k = 0; k < numHeightParticles - 1; k++) {
+
+          // left hand coordinate
+          float f; // Force along thread
+          PVector e = PVector.sub(p[i+1][j][k+1], p[i][j][k]); // Unit length vetor from partical i,j to i+1,j
+
+          float l = PVector.dist(p[i][j][k], p[i+1][j][k+1]); // Distance between two points
+
+          e = e.div(l); // Normalize
+
+          float v1 = PVector.dot(e, vn[i][j][k]);
+          float v2 = PVector.dot(e, vn[i+1][j][k+1]);
+          f = -ks * (l0d_xoy - l) - kd * (v1 - v2);
+          vn[i][j][k].add(PVector.mult(e, f));
+          vn[i+1][j][k+1].sub(PVector.mult(e, f));
+        }
+      }
+    }
+
+
+
+    //  --------------- add gravity and detect collision with boundary----------
+    for (int i = 0; i < numLengthParticles; i++) {
       for (int j = 0; j < numWidthParticles; j++) {
         for (int k = 0; k < numHeightParticles; k++) {
           // left hand coordinate
           vn[i][j][k].add(0, gravity, 0);
           p[i][j][k].add(vn[i][j][k]);
+
+          boolean f = false;
+
+          if (p[i][j][k].y < envY - envHalfH) // left hand top
+          {
+            vn[i][j][k].y = bounce_factor * vn[i][j][k].y;
+            p[i][j][k].y = envY - envHalfH;
+            f = true;
+          }
+
+          if (p[i][j][k].y > envY + envHalfH) // left hand bottom
+          {
+            vn[i][j][k].y = bounce_factor * vn[i][j][k].y;
+            p[i][j][k].y = envY + envHalfH;
+            f = true;
+          }
+
+          if (p[i][j][k].x < envX - envHalfW) // left
+          {
+            vn[i][j][k].x = bounce_factor * vn[i][j][k].x;
+            p[i][j][k].x = envX - envHalfW;
+            f = true;
+          }
+
+          if (p[i][j][k].x > envX + envHalfW) // right
+          {
+            vn[i][j][k].x = bounce_factor * vn[i][j][k].x;
+            p[i][j][k].x = envX + envHalfW;
+            f = true;
+          }
+
+          if (p[i][j][k].z < envZ - envHalfL) // behind
+          {
+            vn[i][j][k].z = bounce_factor * vn[i][j][k].z;
+            p[i][j][k].z = envZ - envHalfL;
+            f = true;
+          }
+
+          if (p[i][j][k].z > envZ + envHalfL) // front
+          {
+            vn[i][j][k].z = bounce_factor * vn[i][j][k].z;
+            p[i][j][k].z = envZ + envHalfL;
+            f = true;
+          }
+
+          if (f) {
+            //-------------------------------------------------
+            vn[i][j][k].mult(0.2); // friction
+
+            if (vn[i][j][k].x < threshold)
+            {
+              vn[i][j][k].x = 0.0;
+            }
+
+
+            if (vn[i][j][k].y < threshold)
+            {
+              vn[i][j][k].y = 0.0;
+            }
+
+            if (vn[i][j][k].z < threshold)
+            {
+              vn[i][j][k].z = 0.0;
+            }
+          }
         }
       }
     }
-    
-    detectCollision_Ball(ball);
-    detectCollision_Env(env); //<>//
-    
+
+    //detectCollision_Ball(ball);
+    //detectCollision_Env(env);
+  }
+
+
+  //---------------accessor-------------------
+  PVector getV(int i, int j, int k) {
+    return vn[i][j][k];
+  }
+
+  //---------------mutator--------------------
+  void setV(int i, int j, int k, PVector v)
+  {
+    vn[i][j][k].set(v);
   }
 }

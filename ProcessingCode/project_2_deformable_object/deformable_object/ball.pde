@@ -1,5 +1,5 @@
 float g = 0.05;
-float bounce_factor = -.7;
+float bounce_f = -.7;
 
 class Ball{
   
@@ -44,27 +44,27 @@ class Ball{
     
     if (pos.x + r > envX + envHalfW) { // right
       pos.x = envX + envHalfW - r;
-      vx *= bounce_factor;
+      vx *= bounce_f;
     }
     if (pos.x - r < envX - envHalfW) { // left
       pos.x = r + envX - envHalfW;
-      vx *= bounce_factor;
+      vx *= bounce_f;
     }
     if (pos.y + r > envY + envHalfH) { // top
       pos.y = envY + envHalfH - r;
-      vy *= bounce_factor;
+      vy *= bounce_f;
     }
     if (pos.y - r < envY - envHalfH) { // bottom
       pos.y = r + envY - envHalfH;
-      vy *= bounce_factor;
+      vy *= bounce_f;
     }
     if (pos.z + r > envZ + envHalfL) { // front
       pos.z = envZ + envHalfL - r;
-      vz *= bounce_factor;
+      vz *= bounce_f;
     }
     if (pos.z - r < envZ - envHalfL) { // behind
       pos.z = r + envZ - envHalfL;
-      vz *= bounce_factor;
+      vz *= bounce_f;
     }
     
     float threshold = 1/1000;

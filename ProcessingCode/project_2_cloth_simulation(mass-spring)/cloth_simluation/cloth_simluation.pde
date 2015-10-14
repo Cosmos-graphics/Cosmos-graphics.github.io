@@ -130,7 +130,7 @@ void draw() {
     {
       int i = numLengthParticals/2;
       int j = numWidthParticals/2;
-      PVector v =cloth.getV(0, 0);
+      PVector v = cloth.getV(0, 0);
       v.y -= 10;
       
       cloth.setV(i, j, v);
