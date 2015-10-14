@@ -1,6 +1,6 @@
 /**
  * Authors: Zixiao Wang, Wenhan Zhu
- * Date: 10/10/2015
+ * Date: 10/12/2015
  * Topic: Cloth simulation(mass-spring)
  *
  *

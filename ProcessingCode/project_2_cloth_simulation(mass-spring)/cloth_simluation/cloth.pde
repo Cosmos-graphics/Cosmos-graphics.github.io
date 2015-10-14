@@ -277,14 +277,14 @@ class Cloth{
       for (int j = 0; j < numWidthParticals; j++) {
         boolean f = false;
         
-        if (p[i][j].y < envY - envHalfH) // left hand bottom
+        if (p[i][j].y < envY - envHalfH) // left hand top
         {
           vn[i][j].y = 0.0;
           p[i][j].y = envY - envHalfH;
           f = true;
         }
         
-        if (p[i][j].y > envY + envHalfH) // left hand top
+        if (p[i][j].y > envY + envHalfH) // left hand bottom
         {
           vn[i][j].y = 0.0;
           p[i][j].y = envY + envHalfH;
