@@ -1,5 +1,7 @@
 import java.util.Collections;
 
+float validDistance = 100f;
+
 ArrayList<Vertice> vertices = new ArrayList<Vertice>();
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 ArrayList<Edge> edges = new ArrayList<Edge>();
@@ -38,8 +40,7 @@ void setup()
   randomObstacles(5);
   vertices.add(start_v);
   vertices.add(end_v);
-  prm(50);
-  generateEdges();
+  generateMap();
   aStarPath = aStarSearch(start_v, end_v);
   misty = new PImage[3];
   misty[0] = loadImage("frame1.png");
@@ -300,6 +301,11 @@ float pointDistance2(Vertice a, Vertice b)
 
 boolean validEdge(Vertice a, Vertice b)
 {
+  println(pointDistance2(a, b) + " " + validDistance);
+  if (pointDistance2(a, b) > validDistance)
+  {
+    return false;
+  }
   float px = b.x - a.x;
   float py = b.y - a.y;
   float s = px*px + py*py;
@@ -337,9 +343,10 @@ void prm(int k)
   for (int i = 0; i < k; i++)
   {
     addRandomPoint();
+    removeDuplicate();
+    removeCollisionWithObstacle();
   }
-  removeDuplicate();
-  removeCollisionWithObstacle();
+
 }
 
 void removeCollisionWithObstacle()
@@ -352,7 +359,6 @@ void removeCollisionWithObstacle()
       {
         vertices.remove(i);
         i--;
-        continue;
       }
     }
   }
@@ -370,6 +376,20 @@ void removeDuplicate()
         j--;
       }
     }
+  }
+}
+
+void generateMap()
+{
+  while(aStarPath.size() == 0)
+  {
+    addRandomPoint();
+    removeDuplicate();
+    removeCollisionWithObstacle();
+    edges.clear();
+    generateEdges();
+    aStarPath = aStarSearch(start_v, end_v);
+    
   }
 }
 
@@ -516,6 +536,11 @@ void keyPressed()
       vertices.remove(i);
       i --;
     }
+    for (int i = 1; i < obstacles.size(); i ++)
+    {
+      obstacles.remove(i);
+      i --;
+    }
     edges.clear();
     generateEdges();
     aStarPath = aStarSearch(start_v, end_v);
@@ -533,6 +558,10 @@ void keyPressed()
   if (key == 'o')
   {
     mode = 6;
+  }
+  if (key == 'm')
+  {
+    generateMap();
   }
 }
 
