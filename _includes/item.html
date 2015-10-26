@@ -1,0 +1,37 @@
+{% for item in site.pages %}
+    {% if item.category == include.category %}
+		<div id="{{ item.id }}" class="section scrollspy">
+			<h3 class="header light">{{ item.title }}</h3>
+			<p class="light">
+				<div class="row">
+					<div class="col s12 m9">
+						<div class="card">
+							<div class="card-image">
+								<img class="materialboxed" data-caption="{{ item.title }}" src="{{ item.image }}">
+								<span class="card-title">{{ item.title }}</span>
+							</div>
+							<div class="card-action">
+								<ul class="collapsible" data-collapsible="accordion">
+									<li>
+										<div class="collapsible-header">Running Status</div>
+										<div class="collapsible-body"><p>
+											{{ item.running_status }}</p></div>
+									</li>
+									<li>
+										<div class="collapsible-header">Implementation Details</div>
+										<div class="collapsible-body">
+											<p>{{ item.implementation_details }}</p>
+										</div>
+									</li>
+									<li>
+										<div class="collapsible-header"><strong><a href="{{item.download}}"> DOWNLOAD </a></strong></div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</p>
+		</div>
+	{% endif %}
+{% endfor %}
