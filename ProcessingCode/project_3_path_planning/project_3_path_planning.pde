@@ -1,6 +1,7 @@
 import java.util.Collections;
 
 float validDistance = 100f;
+float ff = 0.25f;
 
 ArrayList<Vertice> vertices = new ArrayList<Vertice>();
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
@@ -22,6 +23,7 @@ ArrayList<Integer> aStarPath = new ArrayList<Integer>();
  4 -- agent moving           shortcut: p
  5 -- reset agent            shortcut: r
  6 -- placing obstacle       shortcut: o
+ 7 -- generate Map           shortcut: m
 */
 int mode = 0;
 
@@ -42,10 +44,19 @@ void setup()
   vertices.add(end_v);
   generateMap();
   aStarPath = aStarSearch(start_v, end_v);
-  misty = new PImage[3];
-  misty[0] = loadImage("frame1.png");
-  misty[1] = loadImage("frame2.png");
-  misty[2] = loadImage("frame3.png");
+  misty = new PImage[12];
+  misty[0] = loadImage("uFrame1.png");
+  misty[1] = loadImage("uFrame2.png");
+  misty[2] = loadImage("uFrame3.png");
+  misty[3] = loadImage("dFrame1.png");
+  misty[4] = loadImage("dFrame2.png");
+  misty[5] = loadImage("dFrame3.png");
+  misty[6] = loadImage("lFrame1.png");
+  misty[7] = loadImage("lFrame2.png");
+  misty[8] = loadImage("lFrame3.png");
+  misty[9] = loadImage("rFrame1.png");
+  misty[10] = loadImage("rFrame2.png");
+  misty[11] = loadImage("rFrame3.png");
 }
 
 void draw()
@@ -120,11 +131,21 @@ void draw()
   noStroke();
   fill(171, 157, 114);
   //ellipse(agent.x, agent.y, 5,5);
-  image(misty[agent.frame], agent.x - 8.5, agent.y-15);
+  image(misty[agent.frame + agent.face], agent.x - 8.5, agent.y-15);
   if (mode == 4 && aStarPath != null)
   {
     updateAgent();
-    println(agent.x + " " + agent.y);
+  }
+  if (mode == 7)
+  {
+    if (aStarPath.size() == 0)
+    {
+      generateMap();
+    }
+    else
+    {
+      mode = 0;
+    }
   }
   
 }
@@ -141,9 +162,54 @@ void updateAgent()
   float ny = 1.0 * vertices.get(aStarPath.get(agent.id + 1)).y;
   float ds = agent.speed/(1.0 * frameRate);
   
+  if (nx - x > 0 && y - ny > 0)
+  {
+    if (nx - x > y - ny)
+    {
+      agent.face = 6;
+    }
+    else
+    {
+      agent.face = 0;
+    }
+  }
+  if (nx - x < 0 && y - ny < 0)
+  {
+    if (abs(nx - x) > abs(y - ny))
+    {
+      agent.face = 9;
+    }
+    else
+    {
+      agent.face = 3;
+    }
+  }
+  if (nx - x > 0 && y - ny < 0)
+  {
+    if (nx - x > abs(y - ny))
+    {
+      agent.face = 6;
+    }
+    else
+    {
+      agent.face = 3;
+    }
+  }
+  if (nx - x < 0 && y - ny > 0)
+  {
+    if (abs(nx - x) > y - ny)
+    {
+      agent.face = 9;
+    }
+    else
+    {
+      agent.face = 0;
+    }
+  }
+  
   float p = ds / sqrt(pow(ny - y, 2) + pow(nx - x, 2));
   agent.acc += 1/frameRate;
-  if(agent.acc >= 0.33)
+  if(agent.acc >= ff)
   {
     agent.acc = 0;
     agent.increaseFrame();
@@ -301,7 +367,6 @@ float pointDistance2(Vertice a, Vertice b)
 
 boolean validEdge(Vertice a, Vertice b)
 {
-  println(pointDistance2(a, b) + " " + validDistance);
   if (pointDistance2(a, b) > validDistance)
   {
     return false;
@@ -381,15 +446,13 @@ void removeDuplicate()
 
 void generateMap()
 {
-  while(aStarPath.size() == 0)
+  int i = 0;
+  while(aStarPath.size() == 0 && i < 60)
   {
-    addRandomPoint();
-    removeDuplicate();
-    removeCollisionWithObstacle();
+    prm(20);
     edges.clear();
     generateEdges();
     aStarPath = aStarSearch(start_v, end_v);
-    
   }
 }
 
@@ -488,6 +551,7 @@ class Agent
   int id;
   float acc = 0;
   int frame = 0;
+  int face = 6;
   Agent(int x, int y, float s)
   {
     this.x = x;
@@ -500,7 +564,7 @@ class Agent
     frame++;
     if (frame == 3)
     {
-      frame = 0;
+      frame = 1;
     }
   }
   
@@ -561,7 +625,7 @@ void keyPressed()
   }
   if (key == 'm')
   {
-    generateMap();
+    mode = 7;
   }
 }
 
@@ -589,6 +653,7 @@ void mousePressed()
   if (mode == 3)
   {
     vertices.add(new Vertice((int)mouseX, (int)mouseY));
+    removeCollisionWithObstacle();
     edges.clear();
     generateEdges();
     aStarPath = aStarSearch(start_v, end_v);
