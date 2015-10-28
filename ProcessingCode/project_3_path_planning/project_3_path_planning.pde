@@ -639,6 +639,7 @@ void mousePressed()
     generateEdges();
     mode = 0;
     agent.reset();
+    aStarPath = aStarSearch(start_v, end_v);
   }
   
   if (mode == 2)
@@ -649,6 +650,7 @@ void mousePressed()
     generateEdges();
     mode = 0;
     agent.reset();
+    aStarPath = aStarSearch(start_v, end_v);
   }
   if (mode == 3)
   {
