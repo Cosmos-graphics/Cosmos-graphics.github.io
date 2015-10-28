@@ -39,27 +39,38 @@ void draw() {
   fill(0, 255, 0);
   ellipse(end_v.getPos().x, end_v.getPos().y, 5, 5);
   
-  if (!isReached) {
-    rrt.update(edges);
-  }else{
-    for (Edge e: rrt.path)
-    {
-      stroke(0, 0, 255);
-      e.draw();
-    }
-  }
-  
   // draw RRT
   for (Edge e : edges)
   {
     stroke(255);
+    strokeWeight(1);
     e.draw();
   }
+  
+  if (!isReached) {
+    rrt.update(edges);
+  }else{
+    //rrt.detectTarget();
+    for (Edge e: rrt.path)
+    {
+      stroke(0, 0, 255);
+      strokeWeight(3);
+      e.draw();
+    }
+    //print(rrt.path);
+  }
+  
+  
   
   
   if (count == 100 && rrt.dd > 1)
   {
     rrt.dd /= 2;
+    if (rrt.dd <= 1)
+    {
+      rrt.dd = 1;
+    }
+    count %= 100;
   }
   count++;
   
@@ -69,9 +80,8 @@ void draw() {
 class RRT {
   ArrayList<Vertice> vs = new ArrayList<Vertice>();
   int tId = -1; // current id for last v
-  float dd = 20; // movement value
+  float dd = 50; // movement value
   int num = 1;
-  int count = 0;
   ArrayList<Edge> path = new ArrayList<Edge>();
   
   void addV(Vertice v) {
@@ -93,9 +103,10 @@ class RRT {
     n.setMag(dd);
     Vertice v_new = new Vertice(v_nearest.getPos().x + n.x, v_nearest.getPos().y + n.y, tId, v_nearest);
     
-    // detect Boundary
+    // detect Boundary, obstacles and target
     isBoundary = detectBoundary(v_new);
     isObstacle = detectObstacle(obs, v_new);
+    
     
     if (!isBoundary && !isObstacle) {
       // update vertice array
@@ -107,16 +118,25 @@ class RRT {
       // update edge array
       edges.add(new Edge(v_new, v_nearest));
       
+      if (PVector.dist(v_new.getPos(), end_v.getPos()) <= 15 && !isReached) {
+        Vertice end = new Vertice(end_v.getPos().x, end_v.getPos().y, tId, v_new);
+        vs.add(end);
+        edges.add(new Edge(v_new, end_v));
+        path.add(new Edge(v_new, end));
+        isReached = true;
+        findPath(v_new);
+        
+      }
+      
     }
   }
   
   //
   void detectTarget() {
-    for (Vertice v : vs) {
-      if (PVector.dist(v.getPos(), end_v.getPos()) == 0) {
+      if (isReached) {
         isReached = true;
-        findPath(v);
-      }
+        findPath(vs.get(vs.size()-1));
+      
     }
   }
   
@@ -177,8 +197,6 @@ class Edge
   }
   
   void draw() {
-    fill(255);
-    strokeWeight(1);
     line(a.pos.x, a.pos.y, b.pos.x, b.pos.y);
   }
 }
