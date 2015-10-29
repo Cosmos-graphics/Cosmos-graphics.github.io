@@ -58,7 +58,7 @@ void draw() {
   
   if (count == 22 && rrt.eta > 1)
   {
-    print("rrt.eta: ", rrt.eta );
+    //print("rrt.eta: ", rrt.eta );
     rrt.eta = rrt.eta*4/5;
     if (rrt.eta <= 5)
     {
@@ -134,7 +134,7 @@ class RRT {
     countRRT += 1;
     if (countRRT == 3) {
       for (Vertice v : vs) {
-        if (PVector.dist(v.getPos(), end_v.getPos()) <= 5 && !isReached) {
+        if (PVector.dist(v.getPos(), end_v.getPos()) <= 8 && !isReached) {
           end_v.setParent(v);
           vs.add(end_v);
           edges.add(new Edge(v, end_v));
