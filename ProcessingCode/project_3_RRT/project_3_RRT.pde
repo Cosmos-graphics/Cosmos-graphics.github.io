@@ -8,11 +8,13 @@ int count = 0;
 // Boundarys
 float top = 0;
 float bottom = 600;
-float left = 00; 
+float left = 0; 
 float right = 600;
 
-Vertice start_v = new Vertice(30, 600 - 30, 0, null);
-Vertice end_v = new Vertice(600 -30, 30, -1, null);
+Vertice start_v = new Vertice(30.0, 600.0 - 30.0, 0, null);
+Vertice end_v = new Vertice(600.0 -30.0, 30.0, -1, null);
+
+Agent agent = new Agent(start_v.getPos().x, start_v.getPos().y, 50.0);
 
 
 void setup() {
@@ -29,16 +31,7 @@ void draw() {
   
   // draw obstacle
   obs.draw();
-  
-  // draw start vertice
-  noStroke();
-  fill(255, 0, 0);
-  ellipse(start_v.getPos().x, start_v.getPos().y, 5, 5);
-  text("start", 0, 700);
-  // draw end vertice
-  fill(0, 255, 0);
-  ellipse(end_v.getPos().x, end_v.getPos().y, 5, 5);
-  
+
   // draw RRT
   for (Edge e : edges)
   {
@@ -47,31 +40,47 @@ void draw() {
     e.draw();
   }
   
-  if (!isReached) {
-    rrt.update(edges);
-  }else{
-    //rrt.detectTarget();
+  if (isReached)
+  {
     for (Edge e: rrt.path)
     {
       stroke(0, 0, 255);
       strokeWeight(3);
       e.draw();
     }
-    //print(rrt.path);
+  }
+  
+  if(!isReached) {
+    rrt.update(edges);
+    rrt.detectTarget();
   }
   
   
-  
-  
-  if (count == 100 && rrt.dd > 1)
+  if (count == 22 && rrt.eta > 1)
   {
-    rrt.dd /= 2;
-    if (rrt.dd <= 1)
+    print("rrt.eta: ", rrt.eta );
+    rrt.eta = rrt.eta*4/5;
+    if (rrt.eta <= 5)
     {
-      rrt.dd = 1;
+      rrt.eta = 5;
     }
-    count %= 100;
+    count %= 22;
   }
+  
+  // draw start vertice
+  noStroke();
+  fill(255, 0, 0);
+  ellipse(start_v.getPos().x, start_v.getPos().y, 5, 5);
+  // draw end vertice
+  fill(0, 255, 0);
+  ellipse(end_v.getPos().x, end_v.getPos().y, 5, 5);
+  
+  if (isReached) {
+    updateAgent();
+  }
+  noStroke();
+  agent.draw();
+  
   count++;
   
 }
@@ -80,73 +89,77 @@ void draw() {
 class RRT {
   ArrayList<Vertice> vs = new ArrayList<Vertice>();
   int tId = -1; // current id for last v
-  float dd = 50; // movement value
-  int num = 1;
+  float eta = 100; // movement value
+  int countRRT = 0;
   ArrayList<Edge> path = new ArrayList<Edge>();
   
   void addV(Vertice v) {
     vs.add(v);
   }
   
-  void update(ArrayList<Edge> edges) {
-    boolean isBoundary = false;
-    boolean isObstacle = false;
-    
-    // generate a random vertice
-    Vertice vr = new Vertice(random(left, right), random(top, bottom), -2, null);
-    
-    // find nearest vertice
-    Vertice v_nearest = vr.nearest_vertice(vs);
-    
-    // movement
-    PVector n = new PVector(vr.getPos().x - v_nearest.getPos().x, vr.getPos().y - v_nearest.getPos().y);
-    n.setMag(dd);
-    Vertice v_new = new Vertice(v_nearest.getPos().x + n.x, v_nearest.getPos().y + n.y, tId, v_nearest);
-    
-    // detect Boundary, obstacles and target
-    isBoundary = detectBoundary(v_new);
-    isObstacle = detectObstacle(obs, v_new);
-    
-    
-    if (!isBoundary && !isObstacle) {
-      // update vertice array
-      vs.add(v_new);
-      num += 1; // total number of vertices
-      count += 1;
-      tId += 1;
+  //------------------------------------------------
+  void update(ArrayList<Edge> edges) {    
+    for (int i = 0; i < 3; i++) { // for i = 1, ..., n do
+      // generate a random vertice
+      Vertice vr = new Vertice(random(left, right), random(top, bottom), -2, null);
       
-      // update edge array
-      edges.add(new Edge(v_new, v_nearest));
+      // find nearest vertice
+      Vertice v_nearest = vr.nearest_vertice(vs);
       
-      if (PVector.dist(v_new.getPos(), end_v.getPos()) <= 15 && !isReached) {
-        Vertice end = new Vertice(end_v.getPos().x, end_v.getPos().y, tId, v_new);
-        vs.add(end);
-        edges.add(new Edge(v_new, end_v));
-        path.add(new Edge(v_new, end));
-        isReached = true;
-        findPath(v_new);
+      // generate new vertice according to vr and eta
+      PVector n = new PVector(vr.getPos().x - v_nearest.getPos().x, vr.getPos().y - v_nearest.getPos().y);
+      n.setMag(eta);
+      Vertice v_new = new Vertice(v_nearest.getPos().x + n.x, v_nearest.getPos().y + n.y, tId, v_nearest);
+      
+      // ## detect obstacles with new edge
+      boolean isValidEdge = validEdge(v_nearest, v_new);
+      
+      if (isValidEdge && !detectBoundary(v_new)) {
+        // update vertice array
+        vs.add(v_new);
+
+        tId += 1; // update id
         
+        v_new.setParent(v_nearest);
+        edges.add(new Edge(v_nearest, v_new));
+
       }
-      
     }
   }
   
-  //
+  //-------------------------------------------------
   void detectTarget() {
-      if (isReached) {
-        isReached = true;
-        findPath(vs.get(vs.size()-1));
-      
+    // detect target every
+    //println(countRRT);
+    countRRT += 1;
+    if (countRRT == 3) {
+      for (Vertice v : vs) {
+        if (PVector.dist(v.getPos(), end_v.getPos()) <= 5 && !isReached) {
+          end_v.setParent(v);
+          vs.add(end_v);
+          edges.add(new Edge(v, end_v));
+          path.add(new Edge(v, end_v));
+          isReached = true;
+          findPath(end_v);
+          break;
+        }
+      }
+
+      countRRT = 0;
     }
   }
+  
+  
   
   // findPath
   void findPath(Vertice v) {
-    while(v.getParent() != null)
-    {
-      path.add(new Edge(v, v.getParent()));
+      if (v.parent == null)
+      {
+        return;
+      }
+      path.add(new Edge(v.getParent(), v));
       findPath(v.getParent());
-    }
+
   }
   
   boolean detectBoundary(Vertice v) {
@@ -196,9 +209,19 @@ class Edge
     return false;
   }
   
+  float getCost(){
+    return PVector.dist(a.getPos(), b.getPos());
+  }
+  
+  PVector getNVector() {
+    PVector temp = new PVector(b.getPos().x - (a.getPos().x), b.getPos().y - a.getPos().y);
+    return temp.normalize();
+  }
+  
   void draw() {
     line(a.pos.x, a.pos.y, b.pos.x, b.pos.y);
   }
+  
 }
 
 //==============================================
@@ -206,11 +229,18 @@ class Vertice {
   PVector pos;
   int id;
   Vertice parent;
+  float cost = 0;
   
   Vertice (float x, float y, int ID, Vertice p) {
     this.parent = p;
     this.pos = new PVector(x, y);
     this.id = ID;
+    if (p != null) {
+      this.cost = PVector.dist(p.getPos(), pos) + p.getCost();
+    }else {
+      this.cost = 0;
+    }
+    
   }
   
   Vertice nearest_vertice (ArrayList<Vertice> vs) {
@@ -231,6 +261,7 @@ class Vertice {
     
   }
   
+  
   //------------ mutator ------------------
   void setPos(float x, float y) {
     this.pos.x = x;
@@ -239,6 +270,15 @@ class Vertice {
   
   void setId(int ID) {
     this.id = ID;
+  }
+  
+  void setCost(float c) {
+    this.cost = c;
+  }
+  
+  void setParent(Vertice p) {
+    this.parent = p;
+    this.cost = PVector.dist(p.getPos(), pos) + p.getCost();
   }
   
   //------------ accessor ------------------
@@ -252,6 +292,10 @@ class Vertice {
   
   Vertice getParent() {
     return this.parent;
+  }
+  
+  float getCost() {
+    return this.cost;
   }
   
 }
@@ -281,4 +325,94 @@ class Obstacle {
   float getR() {
     return r;
   }
+}
+
+//=============== helper function ==============
+boolean validEdge(Vertice a, Vertice b)
+{
+  float px = b.pos.x - a.pos.x;
+  float py = b.pos.y - a.pos.y;
+  float s = px*px + py*py;
+
+  float u = ((obs.pos.x - a.pos.x) * px + (obs.pos.y - a.pos.y)*py) / s;
+
+  if (u > 1)
+  {
+    u = 1f;
+  }
+  else if (u < 0)
+  {
+    u = 0f;
+  }
+
+  float x = a.pos.x + u * px;
+  float y = a.pos.y + u * py;
+  
+  float dx = x - obs.pos.x;
+  float dy = y - obs.pos.y;
+  
+  if (sqrt(dx * dx + dy * dy) < obs.getR())
+  {
+    return false;
+  }
+    
+  return true;
+}
+
+//==================================
+class Agent
+{
+  float x;
+  float y;
+  float speed;
+  int id;
+  
+  Agent(float x, float y, float s)
+  {
+    this.x = x;
+    this.y = y;
+    speed = s;
+    id = 0;
+  }
+  
+  void reset()
+  {
+    this.x = start_v.pos.x;
+    this.y = start_v.pos.y;
+    id = 0;
+  }
+  
+  void draw() {
+    pushMatrix();
+    rect(x - 7, y - 7, 14, 14, 2);
+    popMatrix();
+  }
+}
+
+void updateAgent()
+{
+  if (agent.id == rrt.path.size())
+  {
+    return;
+  }
+  
+  Edge current = rrt.path.get(rrt.path.size() - 1 - agent.id);
+  PVector currentDir = current.getNVector();
+  
+  float x = agent.x;
+  float y = agent.y;
+  PVector movement = PVector.mult(currentDir, agent.speed/frameRate);
+  
+  PVector rest = new PVector(current.b.getPos().x - x, current.b.getPos().y - y);
+  
+  if (movement.mag() >= rest.mag())
+  {
+    agent.x = current.b.getPos().x;
+    agent.y = current.b.getPos().y;
+    agent.id++;
+  }else {
+    agent.x = x + movement.x;
+    agent.y = y + movement.y;
+  }
+  
 }

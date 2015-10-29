@@ -64,15 +64,15 @@ void draw() {
   }
   
   
-  if (count == 70 && rrt.eta > 1)
+  if (count == 200 && rrt.eta > 1)
   {
-    //print("rrt.eta: ", rrt.eta );
-    rrt.eta = rrt.eta/2;
-    if (rrt.eta <= 3)
+    print("rrt.eta: ", rrt.eta );
+    rrt.eta = rrt.eta*2/3;
+    if (rrt.eta <= 5)
     {
-      rrt.eta = 3;
+      rrt.eta = 5;
     }
-    count %= 70;
+    count %= 200;
   }
   
   if (pathOptCount >= 10000) {
@@ -108,7 +108,7 @@ void draw() {
 class RRT {
   ArrayList<Vertice> vs = new ArrayList<Vertice>();
   int tId = -1; // current id for last v
-  float eta = 50; // movement value
+  float eta = 100; // movement value
   int countRRT = 0;
   ArrayList<Edge> path = new ArrayList<Edge>();
   
@@ -190,6 +190,9 @@ class RRT {
               
               if (isReached) {
                 pathOptCount++;
+                println();
+                print("pathOptCOunt ++");
+                println();
               }
             }else {
               print("Could not find edge! Error!");
@@ -341,8 +344,8 @@ class Vertice {
   
   ArrayList<Vertice> near_vertices(ArrayList<Vertice> vs) {
     int n = vs.size();
-    //float k = min(sqrt(log(n)/n) * gamma, rrt.eta);    // (0 - 1) * gamma
-    float k = 50;
+    float k = min(sqrt(log(n)/n) * gamma, rrt.eta);    // (0 - 1) * gamma
+    //float k = 50;
     
     ArrayList<Vertice> near_vs = new ArrayList<Vertice>();
     
