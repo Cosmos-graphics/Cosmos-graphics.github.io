@@ -64,18 +64,18 @@ void draw() {
   }
   
   
-  if (count == 200 && rrt.eta > 1)
+  if (count == 100 && rrt.eta > 1)
   {
-    print("rrt.eta: ", rrt.eta );
-    rrt.eta = rrt.eta*2/3;
+    //print("rrt.eta: ", rrt.eta );
+    rrt.eta = rrt.eta * 4/5;
     if (rrt.eta <= 5)
     {
       rrt.eta = 5;
     }
-    count %= 200;
+    count %= 100;
   }
   
-  if (pathOptCount >= 10000) {
+  if (pathOptCount >= 800) {
     isStoped = true;
   }
   
@@ -83,7 +83,6 @@ void draw() {
   noStroke();
   fill(255, 0, 0);
   ellipse(start_v.getPos().x, start_v.getPos().y, 5, 5);
-  text("start", 0, 700);
   // draw end vertice
   fill(0, 255, 0);
   ellipse(end_v.getPos().x, end_v.getPos().y, 5, 5);
@@ -190,9 +189,9 @@ class RRT {
               
               if (isReached) {
                 pathOptCount++;
-                println();
-                print("pathOptCOunt ++");
-                println();
+                //println();
+                //print("pathOptCOunt:", pathOptCount);
+                //println();
               }
             }else {
               print("Could not find edge! Error!");
