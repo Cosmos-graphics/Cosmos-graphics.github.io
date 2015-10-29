@@ -9,5 +9,18 @@ layout: default
 		<div class="col s12 m9 l10">
 			{% include item.html category='3' %}
 		</div>
+
+		<div class="col hide-on-small-only m3 l2">
+	      <div class="toc-wrapper">
+	        <ul class="section table-of-contents">
+	        	{% for item in site.pages %}
+					{% if item.category == '3' %}
+			          <li><a href="#{{ item.id }}">{{ item.title }}</a></li>
+			        {% endif %}
+				{% endfor %}
+	        </ul>
+	      </div>
+	    </div>
+
 	</div>
 </div>

@@ -10,5 +10,17 @@ layout: default
 			{% assign c='1' %}
 			{% include item.html category=c %}
 		</div>
+
+		<div class="col hide-on-small-only m3 l2">
+	      <div class="toc-wrapper">
+	        <ul class="section table-of-contents">
+	        	{% for item in site.pages %}
+					{% if item.category == '1' %}
+			          <li><a href="#{{ item.id }}">{{ item.title }}</a></li>
+			        {% endif %}
+				{% endfor %}
+	        </ul>
+	      </div>
+	    </div>
 	</div>
 </div>
