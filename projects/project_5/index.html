@@ -1,0 +1,238 @@
+---
+layout: default
+---
+
+<div class="col s10 m10 l10">
+	<!-- Teal page content  -->
+
+	<div class="row">
+		<div class="col s12 m9 l9">
+			<div id="Boids" class="section scrollspy">
+				<h3 class="header light">Crowd Simulation</h2>
+					<p class="light">
+						We decided to use boids to simulate crowd. First, below is a simulation we created illustrating a lot of things.
+						<ul class="collapsible popout collapsible-accordion" data-collapsible="accordion">
+							<li>
+						    <div class="collapsible-header active">Image</div>
+						    <div class="collapsible-body"><p><center><img class="materialboxed" width="650" src="project_5_boids.gif"></center></p></div>
+						  </li>
+							<li>
+						    <div class="collapsible-header">Video</div>
+						    <div class="collapsible-body">
+									<p><center>
+										<video width="400" controls>
+		        					<source src="project_5_boids.mov" type="video/mp4">
+		    							Your browser does not support HTML5 video.
+										</video>
+									</center></p>
+								</div>
+						  </li>
+						</ul>
+						Now lets break this up into different sections. A lot of the things are going to be illustrated in details.
+	        </p>
+			</div>
+
+			<div id="center" class="section scrollspy">
+				<h3 class="header light">Single Particle System with no Obstacle</h2>
+					<p class="light">
+						This is a particle system that generates instances of boids from the center with random orientation. Note that due to the align force at the origin of the particle system, the boids are chaos. However, after some distance they move away from the origin, it can be easily seen that groups of boids are formed and they act like a group. From this simple example, we can see the attributes of a boids simulation. First the there is a attractive force between instances and a repel force to keep them not too close. Then as a group they have a align force that make them go the same way.
+						<ul class="collapsible popout collapsible-accordion" data-collapsible="accordion">
+							<li>
+								<div class="collapsible-header active">Image</div>
+								<div class="collapsible-body"><p><center><img class="materialboxed" width="650" src="project_5_boids_3d_center.gif"></center></p></div>
+							</li>
+							<li>
+								<div class="collapsible-header">Video</div>
+								<div class="collapsible-body">
+									<p><center>
+										<video width="400" controls>
+											<source src="project_5_boids_3d_center.mov" type="video/mp4">
+											Your browser does not support HTML5 video.
+										</video>
+									</center></p>
+								</div>
+							</li>
+						</ul>
+					</p>
+			</div>
+
+			<div id="single" class="section scrollspy">
+				<h3 class="header light">Single Particle System Boids</h2>
+					<p class="light">
+						We used particle systems to generate a single instance and assign a goal point to the instance and when the instance reached its goal, it will disappear. Below is a single particle system with it's goal.
+						<ul class="collapsible popout collapsible-accordion" data-collapsible="accordion">
+							<li>
+						    <div class="collapsible-header active">Image</div>
+						    <div class="collapsible-body"><p><center><img class="materialboxed" width="650" src="project_5_boids_3d_single.gif"></center></p></div>
+						  </li>
+							<li>
+						    <div class="collapsible-header">Video</div>
+						    <div class="collapsible-body">
+									<p><center>
+										<video width="400" controls>
+		        					<source src="project_5_boids_3d_single.mov" type="video/mp4">
+		    							Your browser does not support HTML5 video.
+										</video>
+									</center></p>
+								</div>
+						  </li>
+						</ul>
+	        </p>
+			</div>
+
+			<div id="double" class="section scrollspy">
+				<h3 class="header light">Double Particle System Boids</h2>
+					<p class="light">
+						Now we added a second partical system with a different goal point. Observe that due to the implementation of the boids, the blue instances are sometimes draged by the white ones due to the align force between the instances of the boids.
+						<ul class="collapsible popout collapsible-accordion" data-collapsible="accordion">
+							<li>
+								<div class="collapsible-header active">Image</div>
+								<div class="collapsible-body"><p><center><img class="materialboxed" width="650" src="project_5_boids_3d_double.gif"></center></p></div>
+							</li>
+							<li>
+								<div class="collapsible-header">Video</div>
+								<div class="collapsible-body">
+									<p><center>
+										<video width="400" controls>
+											<source src="project_5_boids_3d_double.mov" type="video/mp4">
+											Your browser does not support HTML5 video.
+										</video>
+									</center></p>
+								</div>
+							</li>
+						</ul>
+					</p>
+			</div>
+
+			<div id="chaos" class="section scrollspy">
+				<h3 class="header light">Three Particle System Boids</h2>
+					<p class="light">
+						Now we added a new particle system in the middle of the obstacle and it is colored red. Red instances does not have a goal, thus it will go freely as wished and it can be easily observed that it follows the way that the large amount of boids move around it. And since there are more instance moving towards bottom right, all the red instances will also follow what more instances do, which is also bottom right.
+						<ul class="collapsible popout collapsible-accordion" data-collapsible="accordion">
+							<li>
+						    <div class="collapsible-header active">Image</div>
+						    <div class="collapsible-body"><p><center><img class="materialboxed" width="650" src="project_5_boids_3d_chaos.gif"></center></p></div>
+						  </li>
+							<li>
+						    <div class="collapsible-header">Video</div>
+						    <div class="collapsible-body">
+									<p><center>
+										<video width="400" controls>
+		        					<source src="project_5_boids_3d_chaos.mov" type="video/mp4">
+		    							Your browser does not support HTML5 video.
+										</video>
+									</center></p>
+								</div>
+						  </li>
+						</ul>
+	        </p>
+			</div>
+
+			<div id="control" class="section scrollspy">
+				<h3 class="header light">2D User Interaction</h2>
+					<p class="light">
+						We are very limited in time to implement a 3D mouse control system. So we decided to illustrate how user interaction could be down in 2D. The mouse is the position of the obstacle, and the boids react to the position of the obstacle in real time.
+						<ul class="collapsible popout collapsible-accordion" data-collapsible="accordion">
+							<li>
+						    <div class="collapsible-header active">Image</div>
+						    <div class="collapsible-body"><p><center><img class="materialboxed" width="650" src="project_5_boids_2d_control.gif"></center></p></div>
+						  </li>
+							<li>
+						    <div class="collapsible-header">Video</div>
+						    <div class="collapsible-body">
+									<p><center>
+										<video width="400" controls>
+		        					<source src="project_5_boids_2d_control.mov" type="video/mp4">
+		    							Your browser does not support HTML5 video.
+										</video>
+									</center></p>
+								</div>
+						  </li>
+						</ul>
+	        </p>
+			</div>
+
+			<div id="avoid" class="section scrollspy">
+				<h3 class="header light">Avoiding with local minima in 2D</h2>
+					<p class="light">
+						Due to the fact that we did not have time to implement a 3d camera control system and creating a 3d local minima seems to taking too long, we decided to illustrate our approach with a 2D scenario. Here we used a collection of circles to create a local minima since we did not have the time to implement a collision detecting method for other shapes. Here, each obstacle gives the instance a force that is rotated 90 degrees to the right. So when the boids approaches, it will be affected by the force. Since we are implementing this in a way that the instance can only sense it's environment in a distance. This perfectly makes sense. The reason that this implementation can over come any local minima is due to the fact that any maze can be conqured with just following the wall to the left(right). So as you can see below, the local minima is not a problem.
+						<ul class="collapsible popout collapsible-accordion" data-collapsible="accordion">
+							<li>
+						    <div class="collapsible-header active">Image</div>
+						    <div class="collapsible-body"><p><center><img class="materialboxed" width="650" src="project_5_boids_2d_avoid.gif"></center></p></div>
+						  </li>
+							<li>
+						    <div class="collapsible-header">Video</div>
+						    <div class="collapsible-body">
+									<p><center>
+										<video width="400" controls>
+		        					<source src="project_5_boids_2d_avoid.mov" type="video/mp4">
+		    							Your browser does not support HTML5 video.
+										</video>
+									</center></p>
+								</div>
+						  </li>
+						</ul>
+	        </p>
+			</div>
+
+			<div id="break" class="section scrollspy">
+				<h3 class="header light">Limitations</h2>
+					<p class="light">
+						Since the environment is based on obstacles giving forces to the boids. If the instance of boids are pointing directed to the center of the obstacle. And the goal of the instance also lies in the same line. Then the boids will only receive force in one dimension and it will just go back and force in front of the obstacle. It can be solved applying the avoid method before but if not below is how it is broken.
+						<ul class="collapsible popout collapsible-accordion" data-collapsible="accordion">
+							<li>
+						    <div class="collapsible-header active">Image</div>
+						    <div class="collapsible-body"><p><center><img class="materialboxed" width="650" src="project_5_boids_3d_break.gif"></center></p></div>
+						  </li>
+							<li>
+						    <div class="collapsible-header">Video</div>
+						    <div class="collapsible-body">
+									<p><center>
+										<video width="400" controls>
+		        					<source src="project_5_boids_3d_break.mov" type="video/mp4">
+		    							Your browser does not support HTML5 video.
+										</video>
+									</center></p>
+								</div>
+						  </li>
+						</ul>
+	        </p>
+			</div>
+
+			<div id="end" class="section scrollspy">
+				<h3 class="header light">Acknowlegement and Other</h2>
+					<p class="light">
+						We decided to do boids because the video Stephen shoed during class on boids was very neat. We took a look at the original <a href="http://www.red3d.com/cwr/boids/">post</a> and decided to draw the boids just like it. And also when we were looking for something on processing we found out there is a official <a href="https://processing.org/examples/flocking.html"></a> example about flocking on processing.org. However, it was only a 2D version and we discovered it after we finished our simulation. So we only checked with it to see of our simulation was using similar techniques.
+					</p>
+					<p class="light">
+						Also, I (Cosmos) discovered a new vim plugin called <a href="https://github.com/sophacles/vim-processing">vim-processing</a> which I really hope I could find it earlier. This plugin turns vim into a exellent processing editor which it automatically changed the indent to how processing's own ide works and has build in commands to directally run it from vim.
+					</p>
+					<p class="light">
+						Also, due to limited time, we were not able to implement a mechanism to change modes, so we ran the simulation with the same file but with small changed to where and how different things are created. The download file below is the implementation of the very first part of this page. And thank you for reading through this webpage I know there would be a lot of typos and grammar errors since I am writing it very late at night.
+					</p>
+					<p>
+						<a href="../../ProcessingCode/project_5_boid/project_5_boid.pde">Download</a>
+					</p>
+			</div>
+
+		</div>
+
+		<div class="col hide-on-small-only m3 l3">
+			<div class="toc-wrapper">
+				<ul class="section table-of-contents">
+					<li><a href="#Boids">Crowd Simulation</a></li>
+					<li><a href="#center">Single Particle System with no Obstacle</a></li>
+					<li><a href="#single">Single Particle System Boids</a></li>
+					<li><a href="#double">Double Particle System Boids</a></li>
+					<li><a href="#chaos">Three Particle System Boids</a></li>
+					<li><a href="#control">2D User Interaction</a></li>
+					<li><a href="#avoid">Avoiding with local minima</a></li>
+					<li><a href="#break">Limitation</a></li>
+					<li><a href="#end">Acknowlegement and Other</a></li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+</div>
