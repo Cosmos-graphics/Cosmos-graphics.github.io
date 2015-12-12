@@ -8,40 +8,76 @@ layout: default
 	<div class="row">
 		<div class="col s12 m9 l9">
 			<div id="pf" class="section scrollspy">
-				<h1 class="header light">Potential Field RTS Path Planning</h1>
-					<h3 class="header light">Introduction</h3>
+				<h1 class="header light">potential field rts path planning with multilayer agents</h1>
+					<center>
+						<img class="materialboxed" width="650" src="whole.png">
+						<video width="400" controls>
+							<source src="./whole.mov" type="video/mp4">
+								your browser does not support html5 video.
+						</video>
+					</center>
+					<h3 class="header light">introduction</h3>
 					<p class="light">
-						We are a huge fan of Starcraft. The AI of Starcraft is very advanced. The path planning envolved is very interesting. So we decided to implement a variant of our own. We google online and found details about it. It used continuum crowd simulation and flocking crowd to achieve the final goal of the AI in Starcraft according to posts online (Not offically confirmed but highly likely due to the behavior of the game). We decided to work on continuum crowd. The paper that talks about this is highly abstract and they are more focused on crowd behavior instead of what we were thinking. We want to implement a pathing finding system for crowds that could eliminate a lot of problems and is suitable for RTS games. So instead of focusing on everything in the paper, we decided to focus on the dynamic potential field part of it and only implement a simple version to achieve path finding of multiply agents.
-	        </p>
-					<h3 class="header light">Agent</h3>
+						we are a huge fan of starcraft. the ai of starcraft is very advanced. the path planning envolved is very interesting. so we decided to implement a variant of our own. with our implementation of boids for last project we wan to go further with it. we google online and found details about it. it used continuum crowd simulation and flocking crowd to achieve the final goal of the ai in starcraft according to posts online (not offically confirmed but highly likely due to the behavior of the game). we decided to work on continuum crowd. the paper that talks about this is highly abstract and they are more focused on crowd behavior instead of what we were thinking. we want to implement a pathing finding system for crowds that could eliminate a lot of problems and is suitable for rts games. in the end we came up with simulation that combines multilayer agent moving system, potential field base on boids. 
+					</p>
+					<h3 class="header light">agent</h3>
 					<p class="light">
-						Since we are simulating agents, we want our agents to look good. So first take a look of a screenshot of the agents.
+						since we are simulating agents, we want our agents to look good. so first take a look of a screenshot of the agents.
 						<img class="materialboxed" width="650" src="agent.png">
-						The agent is consisted of multiply boxes and a particle system to simulate the rocket jack on the back. The agent is a floating agent with rocket jack powering him. So when they float up and down base on sine function and looks very awesome. Below is a video of how it look when it is live.
+						the agent is consisted of multiply boxes and a particle system to simulate the rocket jack on the back. the agent is a floating agent with rocket jack powering him. so when they float up and down base on sine function and looks very awesome. below is a video of how it look when it is live.
 						<center>
 							<video width="400" controls>
 			        	<source src="./agent.mov" type="video/mp4">
-			    			Your browser does not support HTML5 video.
+			    			your browser does not support html5 video.
 							</video>
 						</center>
 					</p>
-				<h3 class="header light">Potential Field</h3>
+				<h3 class="header light">potential field</h3>
 				<p class="light">
-					We devided our terrain into 50x50. So we have grid of size 2500. At each update, we recalculate the potential field base on the location of the agent. More green it is it represents that the potential there is higher. And the agenta are guided to higher potentials. The potential near the obstacles are calculated with a decay. So the further the grid is the lower the potential is. And the most important potential is calculated from the goal. There is a decay based on Manhantenn Distance between the gird and the goal for faster computer and it works really well too.
+					we devided our terrain into 50x50. so we have grid of size 2500. at each update, we recalculate the potential field base on the location of the agent. more green it is it represents that the potential there is higher. and the agenta are guided to higher potentials. the potential near the obstacles are calculated with a decay. so the further the grid is the lower the potential is. and the most important potential is calculated from the goal. there is a decay based on manhantenn distance between the gird and the goal for faster computer and it works really well too.
 					<img class="materialboxed" width="650" src="pf.png">
-					And as always a video of a working simulation.
+					and as always a video of a working simulation.
 					<center>
 						<video width="400" controls>
 							<source src="./pf.mov" type="video/mp4">
-							Your browser does not support HTML5 video.
+							your browser does not support html5 video.
 						</video>
 					</center>
-					Note the jiggling around the small open space. If we replace the fancy rendered agents with simple floating circles it will look way better. But we decided to keep the agents since although they don't look very good they illustrates how idea. The result of abling to path through and go to the goal is well illustrated.
+					note the jiggling around the small open space. if we replace the fancy rendered agents with simple floating circles it will look way better. but we decided to keep the agents since although they don't look very good they illustrates how idea. the result of abling to path through and go to the goal is well illustrated.
 				</p>
+				<h3 class="header light"> boid movement</h3>
+				<p class="light">
+					the movement purely based on potential field looks really bad. and there could be a lot of error when a large crowd of agents are together. so instead of using potential field for agent movement. we decided to go the other way of using boids as a agent navigation stategy. so in the new version, the agents move on the potential field as before. however, this time the potential field is generated base on the terrain and agent influences to the potential field are removed. the agents will move on its own and they move like boids in the last assignment. you can see in the follow picture how they moves. 
+					<img class="materialboxed" width="650" src="bm.png">
+				<h3 class="header light"> enemy implementation </h3>
+				<p class="light">
+					how can a rts does not have enemies! so we decided to implement the potential field with enemies in mind. each agent have a attacking range. and a corresbonding potential fiels is created base on this that will attract the our agents to attack the enemies. the algorithm we used to generate the enemies' potential field is to have it increase the value of the potential field at the points around it and you can clearly see in the following picture. 
+				<img class="materialboxed" width="650" src="e.png">
+				</p>
+				<h3 class="header light"> multilayer implememtation </h3>
+				<p class="light">
+					in games like starcraft, there are units that are of multiply layer. so we decided to implement one in our simulation as well. we had a 2 layer system. with the top layer a flying unit layer and bottom layer a ground unity layer. and there are huge units that are of twice the size of normal ones that belongs to both layers. as a multilayer implementation, we decided to let huge units and ground units aviod each other, and flying units avoid them selfs. to demostrate better which units are flying units we used circles to represent the units and a line connecting the circle to the ground to highlight they are flying units. 
+					<img class="materialboxed" width="650" src="ml2.png">
+					and in normal renderring form. 
+					<img class="materialboxed" width="650" src="ml1.png">
+					and a video demestrating them in action.
+					<center>
+						<video width="400" controls>
+							<source src="./ml.mov" type="video/mp4">
+							your browser does not support html5 video.
+						</video>
+					</center>
+				</p>
+				<h3 class="header light"> wrap up </h3>
+				<p class="light">
+					now, let's wrap things up. with the implementation of multilayer agents and potential fields and enemies. we can observe from the following. that the huge agents will avoid both the high obstacles and lower obstacles. and the flying agent will only avoid the upper obstacles and the ground units will only avoid ground obstacles.
+				<img class="materialboxed" width="650" src="ml3.png">
+				<img class="materialboxed" width="650" src="ml4.png">
+				</p>
+
 				<h3 class="header light">Difficulties Faced</h3>
 				<p class="light">
-					Since the goal of such solution heads towards for a RTS game. The things we are able to find online often results in considering structers, enemy units and ranged units attack modes. Since we are only interested about how such thing works we had to cut a lot of things what we read. And also due to this, all the illustration we could found on this topic are polished game results. And the only few that are not are images. We used a lot of hacks to achieve some of the things. One example is the force given to the agent. Since it is grid based, we move to the grid next to us with highest potential. So we just apply a force the a agent that is pointing toward that grid. So as a result, from the video before, agents follow a eight direction moving pattern.
-				</p>
+					We encountered a lot of problems for this simulation. The most difficult part was trying to figure out how to have a potential field based agent avoidance. However, after hours and hours of reading online and trying we decided to to it with ideas in continuum crowd that using a normal flock/boid implementation. Another thing we just gave up was to have a mouse control system. In processing with using of 3d camera, the mouse position were so hard to implement. So in the end, we decided to just not implement one. We spend over 2 nights on this topic and the best we could do is having a 3d mouse coordinate with if we lower it to the 2d platform it will have a lot of offset and the behavior of the location of the 3d mouse is very unintuitive we couldn't even understand what ray-sphere means(which is what was supposed 3D mouse is to implement on). Besides these 2 things that we were not able to deliver, we conqured all other things that we faced. Since most of them are technical (SYNTAX!!!) issue we won't state them. Also, observe the wiggling that some of the agents act when they are near others or obstacles? We are aware of that. We even found a paper online about how to get rid of them. Since that in the same simulation with just circles displayed they look totally fine. However, we do not have the time to do so. This would make a great further work to do if we had one. 
 				<h3 class="header light">Resources Used</h3>
 				<p>
 					Websites
